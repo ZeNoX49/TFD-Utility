@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.card.progression.ControllerProgressionCard">
+   <children>
+      <StackPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="100.0">
+         <children>
+            <ImageView fx:id="image" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <TextField fx:id="name" alignment="TOP_CENTER" layoutX="10.0" layoutY="120.0" prefHeight="25.0" prefWidth="100.0" promptText="Name" style="-fx-background-color: transparent;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="typeArme" disable="true" layoutX="10.0" layoutY="152.0" prefHeight="25.0" prefWidth="100.0" stylesheets="@../../../css/combobox.css" visible="false" />
+      <GridPane fx:id="gridPane" alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="170.0" prefWidth="280.0">
+         <columnConstraints>
+            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="mat_1" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="___ 1" GridPane.rowIndex="1" />
+            <Label fx:id="mat_2" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="___ 2" GridPane.rowIndex="2" />
+            <Label fx:id="mat_3" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="___ 3" GridPane.rowIndex="3" />
+            <Label fx:id="mat_4" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="___ 4" GridPane.rowIndex="4" />
+            <Label fx:id="necessaire" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="Nécessaire" GridPane.columnIndex="1" />
+            <Label fx:id="necessaire_1" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="necessaire_2" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="necessaire_4" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="necessaire_3" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="construit" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="Construit" GridPane.columnIndex="2" />
+            <Label fx:id="schema" alignment="CENTER" prefHeight="34.0" prefWidth="70.0" text="Schéma" GridPane.columnIndex="3" />
+            <Spinner fx:id="schema_1" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Spinner fx:id="construit_1" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Spinner fx:id="construit_4" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Spinner fx:id="construit_3" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Spinner fx:id="construit_2" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Spinner fx:id="schema_3" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Spinner fx:id="schema_2" prefHeight="34.0" prefWidth="70.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <TextField fx:id="imageLink" layoutX="10.0" layoutY="180.0" prefHeight="20.0" prefWidth="380.0" promptText="Image Link" style="-fx-background-color: transparent;" />
+      <HBox fx:id="hboxSupp" layoutX="10.0" layoutY="205.0" prefHeight="25.0" prefWidth="380.0" stylesheets="@../../../css/combobox.css" />
+   </children>
+</Pane>

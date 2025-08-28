@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="140.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.card.collectible.ControllerModCard">
+   <children>
+      <HBox prefHeight="26.0" prefWidth="140.0">
+         <children>
+            <ComboBox fx:id="polariteMod" prefHeight="25.0" prefWidth="60.0" stylesheets="@../../../css/combobox.css" />
+            <TextField fx:id="coutMaxMod" alignment="CENTER" prefHeight="25.0" prefWidth="50.0" />
+            <TextField fx:id="niveauMaxMod" alignment="CENTER" prefHeight="25.0" prefWidth="40.0" />
+         </children>
+      </HBox>
+      <ImageView fx:id="imageMod" fitHeight="190.0" fitWidth="140.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+      <TextArea fx:id="nomMod" layoutX="12.0" layoutY="120.0" prefHeight="55.0" prefWidth="115.0" />
+      <TextField fx:id="imgLinkMod" layoutY="200.0" prefHeight="30.0" prefWidth="140.0" />
+      <TextField fx:id="txtfieldmotcle" alignment="CENTER" layoutY="230.0" prefHeight="30.0" prefWidth="140.0" promptText="mot clé" />
+   </children>
+</Pane>

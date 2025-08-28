@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="132.8" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.card.prereglage.ControllerModCardDisplay">
+   <children>
+      <ImageView fx:id="imgMod" fitHeight="180.0" fitWidth="132.8" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgpolarite" fitHeight="21.0" fitWidth="25.0" layoutX="44.4" layoutY="2.3" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="labelCout" alignment="CENTER" layoutX="68.0" prefHeight="27.0" prefWidth="26.0" textFill="#e1e1e1">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelNom" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="95.0" prefHeight="53.0" prefWidth="105.0" textAlignment="CENTER" textFill="#e1e1e1">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

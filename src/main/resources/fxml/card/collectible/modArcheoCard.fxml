@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="140.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.card.collectible.ControllerModArcheoCard">
+   <children>
+      <ImageView fitHeight="231.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/module/archeonique/imgModArcheonique.png" />
+         </image></ImageView>
+      <StackPane prefHeight="25.0" prefWidth="140.0">
+         <children>
+            <ComboBox fx:id="cbPolariteModArcheo" stylesheets="@../../../css/combobox.css" />
+         </children>
+      </StackPane>
+      <StackPane layoutX="14.0" layoutY="66.0" prefHeight="116.0" prefWidth="112.0">
+         <children>
+            <ImageView fx:id="imgModArcheo" fitHeight="85.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </StackPane>
+      <TextField fx:id="nameModArcheo" alignment="CENTER" layoutY="227.0" prefHeight="30.0" prefWidth="140.0" promptText="name" />
+      <TextField fx:id="imgLinkModArcheo" layoutY="258.0" prefHeight="30.0" prefWidth="140.0" promptText="image link" />
+   </children>
+</Pane>

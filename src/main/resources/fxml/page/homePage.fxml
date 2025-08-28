@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="840.0" prefWidth="1540.0" style="-fx-background-color: #505050ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.page.ControllerHomePage">
+   <children>
+      <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="1520.0" text="The First Descendant - Utilitaire" textFill="#c8c8c8">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <HBox layoutX="10.0" layoutY="160.0" prefHeight="670.0" prefWidth="1520.0" spacing="10.0">
+         <children>
+            <HBox prefHeight="670.0" prefWidth="500.0">
+               <children>
+                  <Pane prefWidth="150.0" />
+                  <VBox alignment="CENTER" prefHeight="670.0" prefWidth="500.0" spacing="50.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="470.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Load" textFill="#c8c8c8">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="areaLoad" prefHeight="420.0" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0">
+                           <children>
+                              <Label text="Erreur" textFill="#c8c8c8">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="areaError" prefHeight="150.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <Pane prefWidth="150.0" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="670.0" prefWidth="500.0" spacing="50.0">
+               <children>
+                  <Button fx:id="btn_progression" disable="true" mnemonicParsing="false" onAction="#goToProgression" prefHeight="125.0" prefWidth="500.0" text="Progression">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_collectible" disable="true" mnemonicParsing="false" onAction="#goToCollectible" prefHeight="125.0" prefWidth="500.0" text="Collectible">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_prereglage" disable="true" mnemonicParsing="false" onAction="#goToPrereglage" prefHeight="125.0" prefWidth="500.0" text="Préréglage">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="670.0" prefWidth="500.0" spacing="100.0">
+               <children>
+                  <Button fx:id="btn_loadProgression" mnemonicParsing="false" onAction="#loadProgression" prefHeight="75.0" prefWidth="300.0" text="Load Progression">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_loadCollectible" mnemonicParsing="false" onAction="#loadCollectible" prefHeight="75.0" prefWidth="300.0" text="Load Collectible">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_loadPrereglage" mnemonicParsing="false" onAction="#loadPrereglage" prefHeight="75.0" prefWidth="300.0" text="Load Préréglage">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
