@@ -6,7 +6,7 @@ import java.util.Map;
 import app.Main;
 import app.model.collectible.Mod;
 import app.model.progression.Descendant;
-import app.util.ImageManager;
+import app.util.manager.ImageManager;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;

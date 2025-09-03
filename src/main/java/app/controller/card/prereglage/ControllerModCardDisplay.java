@@ -1,7 +1,7 @@
 package app.controller.card.prereglage;
 
 import app.model.collectible.Mod;
-import app.util.ImageManager;
+import app.util.manager.ImageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;

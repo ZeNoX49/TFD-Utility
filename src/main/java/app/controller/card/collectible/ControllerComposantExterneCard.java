@@ -1,7 +1,7 @@
 package app.controller.card.collectible;
 
 import app.model.collectible.ComposantExterne;
-import app.util.ImageManager;
+import app.util.manager.ImageManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

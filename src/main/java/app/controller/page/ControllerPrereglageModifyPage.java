@@ -31,8 +31,8 @@ import app.model.progression.Acolyte;
 import app.model.progression.Arme;
 import app.model.progression.Descendant;
 import app.model.progression.Vehicule;
-import app.util.ImageManager;
-import app.util.PrereglageManager;
+import app.util.manager.ImageManager;
+import app.util.manager.PrereglageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -170,7 +170,7 @@ public class ControllerPrereglageModifyPage {
         spModArcheo2.getChildren().add(cardPaneModArcheo2);
 
         for(int y = 0; y < 5; y++) {
-            for(int x = 0; x < 5; x++) {
+            for(int x = 0; x < 4; x++) {
                 ImageView img = new ImageView(imageManager.getImage(getClass().getResource("/img/cercle.png").toExternalForm(), 15, 15));
                 gridSaison.add(img, x, y);
                 GridPane.setHalignment(img, HPos.CENTER);
@@ -610,21 +610,21 @@ public class ControllerPrereglageModifyPage {
     }
 
     @FXML
-    void modifyArme1(ActionEvent event) {
+    void modifyArme1(ActionEvent event) throws IOException {
         Main.switchScene("buildPage.fxml");
         ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
         controller.setArme(prereglage, 1);
     }
 
     @FXML
-    void modifyArme2(ActionEvent event) {
+    void modifyArme2(ActionEvent event) throws IOException {
         Main.switchScene("buildPage.fxml");
         ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
         controller.setArme(prereglage, 2);
     }
 
     @FXML
-    void modifyArme3(ActionEvent event) {
+    void modifyArme3(ActionEvent event) throws IOException {
         Main.switchScene("buildPage.fxml");
         ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
         controller.setArme(prereglage, 3);

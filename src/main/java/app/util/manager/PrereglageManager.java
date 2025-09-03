@@ -1,8 +1,8 @@
-package app.util;
+package app.util.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,17 +30,16 @@ public class PrereglageManager extends Manager {
     private Map<Pane, Prereglage> prereglagePane;
     private List<Prereglage> prereglages;
     private List<HBox> hbox_prereglage;
-    private Map<String, List<HBox>> liste_hbox_mod;
+    private Map<String, Map<ControllerModCardDisplay, Pane>> liste_card_mod;
     private List<HBox> hbox_rechercheMod;
 
     public void initialize() throws IOException {
-        prereglagePane = new HashMap<>();
+        prereglagePane = new LinkedHashMap<>();
         cardPrereglage();
 
-        liste_hbox_mod = new HashMap<>();
-        for(String type : Mod.TYPE_MOD) { 
-            liste_hbox_mod.put(type, new ArrayList<>());
-            // cardMod(type);
+        liste_card_mod = new LinkedHashMap<>();
+        for(String type : Mod.TYPE_MOD) {
+            cardMod(type);
         }
     }
 
@@ -52,7 +51,7 @@ public class PrereglageManager extends Manager {
         hbox_prereglage = makePrereglageCard();
     }
 
-    public List<HBox> makePrereglageCard() throws IOException {
+    private List<HBox> makePrereglageCard() throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(20, 1305, 267);
 
@@ -119,12 +118,11 @@ public class PrereglageManager extends Manager {
 
     public void cardMod(String type) throws IOException {
         Main.addTextLoad("\nMod display " + type + " :");
-        liste_hbox_mod.put(type, makeModCard(type));
+        makeListModCard(type);
     }
 
-    private List<HBox> makeModCard(String type) throws IOException {
-        List<HBox> hboxs = new ArrayList<>();
-        HBox hbox = createHBox(16, 1475, 180);
+    private void makeListModCard(String type) throws IOException {
+        Map<ControllerModCardDisplay, Pane> cards = new LinkedHashMap<>();
 
         for(Mod mod : CollectionCollectible.getMod(type)) {
             Main.addTextLoad(" - " + mod.getNom());
@@ -134,6 +132,17 @@ public class PrereglageManager extends Manager {
             ControllerModCardDisplay controller = loader.getController();
             controller.setMod(mod);
 
+            cards.put(controller, cardPane);
+        }
+
+        liste_card_mod.put(type, cards);
+    }
+
+    public List<HBox> makeBoxModCard(Map<ControllerModCardDisplay, Pane> cards) throws IOException {
+        List<HBox> hboxs = new ArrayList<>();
+        HBox hbox = createHBox(16, 1475, 180);
+
+        for(Pane cardPane : cards.values()) {
             hbox.getChildren().add(cardPane);
             if(hbox.getChildren().size() == 10) {
                 hboxs.add(hbox);
@@ -147,18 +156,14 @@ public class PrereglageManager extends Manager {
         return hboxs;
     }
 
-    public List<HBox> getHBoxRechercheModCard(String type, String recherche) throws IOException {
+    public List<HBox> getHBoxRechercheModCard(Map<ControllerModCardDisplay, Pane> cards, String recherche) throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(16, 1475, 180);
 
-        for(Mod mod : CollectionCollectible.getMod(type)) {
+        for(ControllerModCardDisplay ctrl : cards.keySet()) {
+            Mod mod = ctrl.getMod();
             if(mod.getNom().contains(recherche) || mod.getMotCle().contains(recherche)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/prereglage/modCardDisplay.fxml"));
-                Pane cardPane = loader.load();
-                ControllerModCardDisplay controller = loader.getController();
-                controller.setMod(mod);
-
-                hbox.getChildren().add(cardPane);
+                hbox.getChildren().add(cards.get(ctrl));
                 if(hbox.getChildren().size() == 10) {
                     hboxs.add(hbox);
                     hbox = createHBox(16, 1475, 180);
@@ -178,7 +183,7 @@ public class PrereglageManager extends Manager {
     public List<HBox> getHBoxPrereglage() {
         return hbox_prereglage;
     }
-    public List<HBox> getHBoxMod(String type) {
-        return liste_hbox_mod.get(type);
+    public Map<ControllerModCardDisplay, Pane> getCardMod(String type) {
+        return liste_card_mod.get(type);
     }
 }

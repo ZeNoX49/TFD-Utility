@@ -1,13 +1,13 @@
-package app;
+package app.util.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import app.Collection.CollectionProgression;
+import app.Main;
 import app.controller.card.progression.ControllerProgressionCard;
 import app.model.progression.Progression;
-import app.util.Manager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;

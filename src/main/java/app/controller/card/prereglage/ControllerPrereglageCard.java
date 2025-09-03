@@ -7,7 +7,7 @@ import app.Collection.CollectionProgression;
 import app.Main;
 import app.controller.page.ControllerPrereglageModifyPage;
 import app.model.prereglage.Prereglage;
-import app.util.ImageManager;
+import app.util.manager.ImageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

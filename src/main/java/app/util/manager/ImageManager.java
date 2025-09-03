@@ -1,4 +1,4 @@
-package app.util;
+package app.util.manager;
 
 import app.Main;
 import javafx.scene.image.Image;

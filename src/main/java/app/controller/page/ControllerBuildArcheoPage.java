@@ -17,7 +17,7 @@ import app.model.prereglage.GridArcheo;
 import app.model.prereglage.GridArcheoManager;
 import app.model.prereglage.Prereglage;
 import app.model.progression.Descendant;
-import app.util.ImageManager;
+import app.util.manager.ImageManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -53,6 +53,8 @@ public class ControllerBuildArcheoPage {
     @FXML private ComboBox<String> cbArcheo1, cbArcheo2, cbArcheo3, cbArcheo4;
 
     @FXML private GridPane gridSaison;
+    private int nbSaisonActivated = 0;
+    private Map<Integer, Boolean> mapSaison = new HashMap<>();
     private Map<String, Boolean> mapSaisonActivated = new HashMap<>();
 
     @FXML
@@ -140,20 +142,26 @@ public class ControllerBuildArcheoPage {
 
         // saison
         for(int y = 0; y < 5; y++) {
-            for(int x = 0; x < 5; x++) {
+            int Y = y;
+            mapSaison.put(Y, false);
+            for(int x = 0; x < 4; x++) {
                 String key = gridArcheo.getKeyFromInt(x, y);
                 mapSaisonActivated.put(key, false);
 
                 ImageView img = new ImageView(imageManager.getImage(getClass().getResource("/img/cercle.png").toExternalForm(), 50, 50));
-                gridSaison.add(img, x, y);
-                GridPane.setHalignment(img, HPos.CENTER);
-                GridPane.setValignment(img, VPos.CENTER);
-
                 Button btn = new Button();
                 btn.setPrefSize(50, 50);
                 btn.setStyle("-fx-background-color: transparent");
-                btn.setOnAction((_) -> onClickSaison(img, key));
-                grid.add(btn, x, y);
+                btn.setGraphic(img);
+                btn.setOnAction((_) -> onClickSaison(btn, key, Y));
+                gridSaison.add(btn, x, y);
+
+                GridPane.setHalignment(btn, HPos.CENTER);
+                GridPane.setValignment(btn, VPos.CENTER);
+
+                if(prereglage.getAttributSaison().contains(key)) {
+                    onClickSaison(btn, key, Y);
+                }
             }
         }
 
@@ -256,15 +264,24 @@ public class ControllerBuildArcheoPage {
         }
     }
 
-    private void onClickSaison(ImageView img, String key) {
-        if (mapSaisonActivated.get(key)) {
-            img.setImage(imageManager.getImage(getClass().getResource("/img/cercle.png").toExternalForm(), 50, 50));
+    private void onClickSaison(Button btn, String key, int y) {
+        if(!mapSaisonActivated.get(key)) {
+            if(!mapSaison.get(y) && nbSaisonActivated < 3) {
+                btn.setGraphic(new ImageView(imageManager.getImage(getClass().getResource("/img/cercleVert.png").toExternalForm(), 50, 50)));
+                if(!prereglage.getAttributSaison().contains(key)) {
+                    prereglage.addAttributSaison(key);
+                }
+                nbSaisonActivated++;
+                mapSaison.put(y, true);
+                mapSaisonActivated.put(key, true);
+            }
+        } 
+        else {
+            btn.setGraphic(new ImageView(imageManager.getImage(getClass().getResource("/img/cercle.png").toExternalForm(), 50, 50)));
             prereglage.removeAttributSaison(key);
+            nbSaisonActivated--;
+            mapSaison.put(y, false);
             mapSaisonActivated.put(key, false);
-        } else {
-            img.setImage(imageManager.getImage(getClass().getResource("/img/cercleVert.png").toExternalForm(), 50, 50));
-            prereglage.addAttributSaison(key);
-            mapSaisonActivated.put(key, true);
         }
     }
 

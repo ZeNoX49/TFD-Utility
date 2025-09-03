@@ -1,4 +1,4 @@
-package app.util;
+package app.util.manager;
 
 import javafx.scene.layout.HBox;
 

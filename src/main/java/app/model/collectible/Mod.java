@@ -38,8 +38,6 @@ public class Mod implements Comparable<Mod> {
         POLARITE.get("vert").put("Malachite",  Main.class.getResource("/img/polarite/vert/malachite.png").toExternalForm());
         POLARITE.get("vert").put("Xantique",   Main.class.getResource("/img/polarite/vert/xantique.png").toExternalForm());
         POLARITE.get("vert").put("Rutile",     Main.class.getResource("/img/polarite/vert/rutile.png").toExternalForm());
-
-        
     }
 
     public static final List<String> TYPE_MOD;

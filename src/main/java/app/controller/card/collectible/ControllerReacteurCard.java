@@ -5,7 +5,7 @@ import java.util.HashMap;
 import app.Collection.CollectionCollectible;
 import app.Main;
 import app.model.collectible.Reacteur;
-import app.util.ImageManager;
+import app.util.manager.ImageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;

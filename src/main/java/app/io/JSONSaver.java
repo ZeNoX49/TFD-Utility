@@ -419,7 +419,6 @@ public class JSONSaver {
             // Build Archeonique
             List<BuildArcheoPOJO> buildArcheoList = new ArrayList<>();
             for(String k : prereglage.getBuildArcheo().getNodesActivated()) {
-                System.out.println(k);
                 BuildArcheoPOJO buildArcheoPOJO = new BuildArcheoPOJO();
                 buildArcheoPOJO.key = k;
                 buildArcheoList.add(buildArcheoPOJO);

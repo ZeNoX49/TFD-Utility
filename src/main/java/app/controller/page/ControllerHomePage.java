@@ -3,9 +3,9 @@ package app.controller.page;
 import java.io.IOException;
 
 import app.Main;
-import app.ProgressionManager;
-import app.util.CollectibleManager;
-import app.util.PrereglageManager;
+import app.util.manager.CollectibleManager;
+import app.util.manager.PrereglageManager;
+import app.util.manager.ProgressionManager;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
