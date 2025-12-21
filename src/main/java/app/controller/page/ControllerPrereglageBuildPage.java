@@ -2,9 +2,11 @@ package app.controller.page;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,6 @@ import app.Collection.CollectionProgression;
 import app.Main;
 import app.controller.card.prereglage.ControllerModCardDisplay;
 import app.controller.card.prereglage.ControllerModDeclenchementCardDisplay;
-import app.model.collectible.Mod;
 import app.model.prereglage.BuildArme;
 import app.model.prereglage.Prereglage;
 import app.model.progression.Arme;
@@ -26,17 +27,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class ControllerBuildPage {
+public class ControllerPrereglageBuildPage {
 
     private PrereglageManager prereglageManager = PrereglageManager.getInstance();
     private ImageManager imageManager = ImageManager.getInstance();
@@ -55,10 +58,13 @@ public class ControllerBuildPage {
     private Map<String, Integer> mapModDeclenchement;
 
     /* MOD */
-    @FXML private VBox vboxMod;
-    @FXML private GridPane gridMod;
-    @FXML private ComboBox<PolariteItem> cbPolariteMod1, cbPolariteMod2, cbPolariteMod3, cbPolariteMod4, cbPolariteMod5, cbPolariteMod6, cbPolariteMod7, cbPolariteMod8, cbPolariteMod9, cbPolariteMod10, cbPolariteModDescendant, cbPolariteModSecondaire;
+    @FXML private StackPane spMod;
+    private GridPane gridMod;
+    private Map<Integer, Map<Integer, StackPane>> stackpaneGrid = new HashMap<>();
+    private ComboBox<PolariteItem> cbPolariteMod1, cbPolariteMod2, cbPolariteMod3, cbPolariteMod4, cbPolariteMod5, cbPolariteMod6, cbPolariteMod7, cbPolariteMod8, cbPolariteMod9, cbPolariteMod10, cbPolariteModDescendant, cbPolariteModSecondaire;
     private ControllerModCardDisplay modDisplay1, modDisplay2, modDisplay3, modDisplay4, modDisplay5, modDisplay6, modDisplay7, modDisplay8, modDisplay9, modDisplay10, modDisplayDescendant, modDisplaySecondaire;
+
+    @FXML private VBox vboxMod;
     @FXML private TextField txtfieldResearch;
     
     /* ARME */
@@ -83,7 +89,21 @@ public class ControllerBuildPage {
         cards = new LinkedHashMap<>();
 
         // Mod
-        for(ComboBox<PolariteItem> cb : new ComboBox[] {cbPolariteMod1, cbPolariteMod2, cbPolariteMod3, cbPolariteMod4, cbPolariteMod5, cbPolariteMod6, cbPolariteMod7, cbPolariteMod8, cbPolariteMod9, cbPolariteMod10}) {
+        cbPolariteMod1 = new ComboBox<>();
+        cbPolariteMod2 = new ComboBox<>();
+        cbPolariteMod3 = new ComboBox<>();
+        cbPolariteMod4 = new ComboBox<>();
+        cbPolariteMod5 = new ComboBox<>();
+        cbPolariteMod6 = new ComboBox<>();
+        cbPolariteMod7 = new ComboBox<>();
+        cbPolariteMod8 = new ComboBox<>();
+        cbPolariteMod9 = new ComboBox<>();
+        cbPolariteMod10 = new ComboBox<>();
+        cbPolariteModDescendant = new ComboBox<>();
+        cbPolariteModSecondaire = new ComboBox<>();
+
+        for(ComboBox<PolariteItem> cb : new ComboBox[] {cbPolariteMod1, cbPolariteMod2, cbPolariteMod3, cbPolariteMod4, cbPolariteMod5, cbPolariteMod6, cbPolariteMod7, cbPolariteMod8, cbPolariteMod9, cbPolariteMod10, cbPolariteModDescendant, cbPolariteModSecondaire}) {
+            cb.setPrefSize(150, 25);
             ComboboxItem factory = new ComboboxItem();
             factory.setupComboBox(cb, 15); // méthode utilitaire qui configure un ComboBox existant
             cb.getItems().addAll(PolariteItem.getItems());
@@ -93,6 +113,10 @@ public class ControllerBuildPage {
     public void setDescendant(Prereglage prereglage) throws IOException {
         this.prereglage = prereglage;
         type = "descendant";
+
+        VBox vbox = createGridMod(6);
+        spMod.getChildren().add(vbox);
+        gridMod = (GridPane) vbox.getChildren().get(1);
 
         vboxDeclenchement.setDisable(false);
         vboxDeclenchement.setVisible(true);
@@ -111,34 +135,41 @@ public class ControllerBuildPage {
         }
 
         if(prereglage.getBuildDescendant().getIdMod1() != null) {
-            modDisplay1 = createModDisplay(prereglage.getBuildDescendant().getIdMod1(), 0, 0);
+            modDisplayDescendant = createModDisplay(prereglage.getBuildDescendant().getIdModDescendant(), 0, 0);
+        }
+        if(prereglage.getBuildDescendant().getIdMod1() != null) {
+            modDisplay1 = createModDisplay(prereglage.getBuildDescendant().getIdMod1(), 1, 0);
         }
         if(prereglage.getBuildDescendant().getIdMod2() != null) {
-            modDisplay2 = createModDisplay(prereglage.getBuildDescendant().getIdMod2(), 1, 0);
+            modDisplay2 = createModDisplay(prereglage.getBuildDescendant().getIdMod2(), 2, 0);
         }
         if(prereglage.getBuildDescendant().getIdMod3() != null) {
-            modDisplay3 = createModDisplay(prereglage.getBuildDescendant().getIdMod3(), 2, 0);
+            modDisplay3 = createModDisplay(prereglage.getBuildDescendant().getIdMod3(), 3, 0);
         }
         if(prereglage.getBuildDescendant().getIdMod4() != null) {
-            modDisplay4 = createModDisplay(prereglage.getBuildDescendant().getIdMod4(), 3, 0);
+            modDisplay4 = createModDisplay(prereglage.getBuildDescendant().getIdMod4(), 4, 0);
         }
         if(prereglage.getBuildDescendant().getIdMod5() != null) {
-            modDisplay5 = createModDisplay(prereglage.getBuildDescendant().getIdMod5(), 4, 0);
+            modDisplay5 = createModDisplay(prereglage.getBuildDescendant().getIdMod5(), 5, 0);
+        }
+
+        if(prereglage.getBuildDescendant().getIdMod6() != null) {
+            modDisplaySecondaire = createModDisplay(prereglage.getBuildDescendant().getIdModSecondaire(), 0, 1);
         }
         if(prereglage.getBuildDescendant().getIdMod6() != null) {
-            modDisplay6 = createModDisplay(prereglage.getBuildDescendant().getIdMod6(), 0, 1);
+            modDisplay6 = createModDisplay(prereglage.getBuildDescendant().getIdMod6(), 1, 1);
         }
         if(prereglage.getBuildDescendant().getIdMod7() != null) {
-            modDisplay7 = createModDisplay(prereglage.getBuildDescendant().getIdMod7(), 1, 1);
+            modDisplay7 = createModDisplay(prereglage.getBuildDescendant().getIdMod7(), 2, 1);
         }
         if(prereglage.getBuildDescendant().getIdMod8() != null) {
-            modDisplay8 = createModDisplay(prereglage.getBuildDescendant().getIdMod8(), 2, 1);
+            modDisplay8 = createModDisplay(prereglage.getBuildDescendant().getIdMod8(), 3, 1);
         }
         if(prereglage.getBuildDescendant().getIdMod9() != null) {
-            modDisplay9 = createModDisplay(prereglage.getBuildDescendant().getIdMod9(), 3, 1);
+            modDisplay9 = createModDisplay(prereglage.getBuildDescendant().getIdMod9(), 4, 1);
         }
         if(prereglage.getBuildDescendant().getIdMod10() != null) {
-            modDisplay10 = createModDisplay(prereglage.getBuildDescendant().getIdMod10(), 4, 1);
+            modDisplay10 = createModDisplay(prereglage.getBuildDescendant().getIdMod10(), 5, 1);
         }
 
         mapModDeclenchement = new HashMap<>();
@@ -171,11 +202,13 @@ public class ControllerBuildPage {
 
         addListeners();
 
+        cbPolariteModDescendant.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteModDescendant()));
         cbPolariteMod1.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod1()));
         cbPolariteMod2.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod2()));
         cbPolariteMod3.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod3()));
         cbPolariteMod4.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod4()));
         cbPolariteMod5.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod5()));
+        cbPolariteModSecondaire.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteModSecondaire()));
         cbPolariteMod6.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod6()));
         cbPolariteMod7.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod7()));
         cbPolariteMod8.setValue(PolariteItem.getItemByPolarite(prereglage.getBuildDescendant().getPolariteMod8()));
@@ -185,6 +218,10 @@ public class ControllerBuildPage {
     
     public void setArme(Prereglage prereglage, int numArme) throws IOException {
         this.prereglage = prereglage;
+
+        VBox vbox = createGridMod(5);
+        spMod.getChildren().add(vbox);
+        gridMod = (GridPane) vbox.getChildren().get(1);
 
         vboxStatArme.setDisable(false);
         vboxStatArme.setVisible(true);
@@ -299,11 +336,22 @@ public class ControllerBuildPage {
             cbPolariteMod9.setValue(PolariteItem.getItemByPolarite(buildArme.getPolariteMod9()));
             cbPolariteMod10.setValue(PolariteItem.getItemByPolarite(buildArme.getPolariteMod10()));
 
-            cards = prereglageManager.getCardMod(Mod.TYPE_MOD_POUR_ARME.get(arme.getTypeArme()));
-            vboxMod.getChildren().addAll(prereglageManager.makeBoxModCard(cards));
+            // cards = prereglageManager.getCardMod(Mod.TYPE_MOD_POUR_ARME.get(arme.getTypeArme()));
+            // vboxMod.getChildren().addAll(prereglageManager.makeBoxModCard(cards));
         }
         
         addListeners();
+    }
+
+    private void something(String ameliorationArme, ImageView imgView, ComboBox cbAmelio, String ameliorationBuild, Label labelAmelioStat) {
+        if(!ameliorationArme.isEmpty()) {
+            imgView.setImage(imageManager.getImage(Arme.AMELIORATION_IMG.get(ameliorationArme), 25, 25));
+            cbAmelio.getItems().addAll(Arme.AMELIORATION.get(ameliorationArme).keySet());
+            if(!ameliorationBuild.isEmpty()) {
+                cbAmelio.setValue(ameliorationBuild);
+                labelAmelioStat.setText(Arme.AMELIORATION.get(ameliorationArme).get(ameliorationBuild));
+            }
+        }
     }
 
     private void addListeners() {
@@ -320,6 +368,9 @@ public class ControllerBuildPage {
 
         // Descendant
         if(type.equals("descendant")) {
+            setupListenerCbPolarite(cbPolariteModDescendant, modDisplayDescendant);
+            setupListenerCbPolarite(cbPolariteModSecondaire, modDisplaySecondaire);
+
             cbPrincipal.valueProperty().addListener((_, _, newVal) -> {
                 Descendant descendant = CollectionProgression.getDescendantByName(newVal);
                 prereglage.setIdDescendant(descendant.getIdDescendant());
@@ -374,8 +425,8 @@ public class ControllerBuildPage {
 
     @FXML
     void retour(ActionEvent event) throws IOException {
-        Main.switchScene("prereglageModifyPage.fxml");
-        ControllerPrereglageModifyPage controller = (ControllerPrereglageModifyPage) Main.getCurrentController();
+        Main.switchScene("prereglagePage.fxml");
+        ControllerPrereglagePage controller = (ControllerPrereglagePage) Main.getCurrentController();
         controller.setPrereglage(prereglage);
     }
 
@@ -386,14 +437,6 @@ public class ControllerBuildPage {
 
     @FXML
     void recherche(ActionEvent event) throws IOException {
-        String typeMod = null;
-        switch (type) {
-            case "descendant" -> typeMod = "Mod Descendant";
-            case "arme1" -> typeMod = CollectionProgression.getArmeById(prereglage.getIdArme1()).getTypeArme();
-            case "arme2" -> typeMod = CollectionProgression.getArmeById(prereglage.getIdArme2()).getTypeArme();
-            case "arme3" -> typeMod = CollectionProgression.getArmeById(prereglage.getIdArme3()).getTypeArme();
-        }
-
         vboxMod.getChildren().clear();
         if(!txtfieldResearch.getText().isEmpty()) {
             vboxMod.getChildren().addAll(prereglageManager.getHBoxRechercheModCard(cards, txtfieldResearch.getText()));
@@ -401,6 +444,55 @@ public class ControllerBuildPage {
         else {
             vboxMod.getChildren().addAll(prereglageManager.makeBoxModCard(cards));
         }
+    }
+
+    private VBox createGridMod(int size) {
+        for(int x = 0; x < 2; x++) {
+            stackpaneGrid.put(x, new HashMap<>());
+            for(int y = 0; y < size; y++) {
+                StackPane sp = new StackPane();
+                sp.setMinSize(100, 130);
+                sp.setPrefSize(100, 130);
+                sp.setMaxSize(100, 130);
+                stackpaneGrid.get(x).put(y, sp);
+            }
+        }
+
+        List<ComboBox<PolariteItem>> haut = new LinkedList<>();
+        List<ComboBox<PolariteItem>> bas = new LinkedList<>();
+        if (size == 6) {
+            haut.add(cbPolariteModDescendant);
+            bas.add(cbPolariteModSecondaire);
+        }
+        haut.addAll(Arrays.asList(cbPolariteMod1, cbPolariteMod2, cbPolariteMod3, cbPolariteMod4, cbPolariteMod5));
+        bas.addAll(Arrays.asList(cbPolariteMod6, cbPolariteMod7, cbPolariteMod8, cbPolariteMod9, cbPolariteMod10));
+
+        VBox vboxPrincipal = new VBox();
+        vboxPrincipal.setSpacing(5);
+        vboxPrincipal.setPrefSize(100 * size, 325);
+
+        HBox hboxHaut = new HBox();
+        hboxHaut.setPrefSize(100 * size, 25);
+        hboxHaut.setSpacing(5);
+        hboxHaut.setPadding(new Insets(0, 5, 0, 5));
+        hboxHaut.getChildren().addAll(haut);
+
+        HBox hboxBas = new HBox();
+        hboxBas.setPrefSize(100 * size, 25);
+        hboxBas.setSpacing(5);
+        hboxBas.setPadding(new Insets(0, 5, 0, 5));
+        hboxBas.getChildren().addAll(bas);
+
+        GridPane grid = new GridPane();
+        grid.setMinSize(100 * size, 260);
+        grid.setPrefSize(100 * size, 260);
+        grid.setMaxSize(100 * size, 260);
+
+        vboxPrincipal.getChildren().add(hboxHaut);
+        vboxPrincipal.getChildren().add(grid);
+        vboxPrincipal.getChildren().add(hboxBas);
+
+        return vboxPrincipal;
     }
 
     private ControllerModCardDisplay createModDisplay(int idMod, int col, int row) throws IOException {
@@ -412,7 +504,11 @@ public class ControllerBuildPage {
         ControllerModCardDisplay controller = loader.getController();
         controller.setMod(CollectionCollectible.getModById(idMod));
 
-        gridMod.add(cardPane, col, row);
+        StackPane sp = stackpaneGrid.get(row).get(col);
+        sp.getChildren().clear();
+        sp.getChildren().add(cardPane);
+
+        gridMod.add(sp, col, row);
         GridPane.setHalignment(cardPane, HPos.CENTER);
         GridPane.setValignment(cardPane, VPos.CENTER);
 

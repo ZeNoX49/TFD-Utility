@@ -40,11 +40,12 @@ public class ControllerListPage {
     @FXML private VBox vboxList, vbox_button;
     @FXML private Button button_refresh, button_plus;
 
-    private final Map<String, Button> liste_buttons = new HashMap<>();
-    private final Map<String, Runnable> actionsProgression = new HashMap<>();
-    private final Map<String, Runnable> actionsCollectible = new HashMap<>();
-    private final Map<String, Runnable> actionsPrereglage = new HashMap<>();
+    private Map<String, Button> liste_buttons = new HashMap<>();
+    private final Map<String, IOAction> actionsProgression = new HashMap<>();
+    private final Map<String, IOAction> actionsCollectible = new HashMap<>();
+    private final Map<String, IOAction> actionsPrereglage = new HashMap<>();
 
+    /* ------------------------- INITIALISATION ------------------------- */
     @FXML
     public void initialize() throws IOException {
         switch (type) {
@@ -54,70 +55,59 @@ public class ControllerListPage {
         }
     }
 
+    // Initialisation de la progression
     private void initProgression() throws IOException {
-        actionsProgression.put("d", this::useDescendant);
-        actionsProgression.put("w", this::useArme);
-        actionsProgression.put("a", this::useAcolyte);
-        actionsProgression.put("v", this::useVehicule);
-
-        addButtonToVBox(vbox_button, "d", "Descendants", this::useDescendant);
-        addButtonToVBox(vbox_button, "w", "Armes", this::useArme);
-        addButtonToVBox(vbox_button, "a", "Acolytes", this::useAcolyte);
-        addButtonToVBox(vbox_button, "v", "Véhicules", this::useVehicule);
+        setupButton(actionsProgression, "Descendants", this::useDescendant);
+        setupButton(actionsProgression, "Armes", this::useArme);
+        setupButton(actionsProgression, "Acolytes", this::useAcolyte);
+        setupButton(actionsProgression, "Véhicules", this::useVehicule);
 
         switch (type_actif) {
-            case "d" -> useDescendant();
-            case "w" -> useArme();
-            case "a" -> useAcolyte();
-            case "v" -> useVehicule();
+            case "Descendants" -> useDescendant();
+            case "Armes" -> useArme();
+            case "Acolytes" -> useAcolyte();
+            case "Véhicules" -> useVehicule();
             default -> useDescendant();
         }
     }
 
+    // Initialisation des collectible
     private void initCollectible() throws IOException {
-        actionsCollectible.put("r", this::useReacteur);
-        actionsCollectible.put("ce", this::useComposantExterne);
-        actionsCollectible.put("ma", this::useModArcheo);
-        actionsCollectible.put("md", this::useModDeclenchement);
+        setupButton(actionsCollectible, "Réacteurs", this::useReacteur);
+        setupButton(actionsCollectible, "Composants Externes", this::useComposantExterne);
 
-        addButtonToVBox(vbox_button, "r", "Réacteurs", this::useReacteur);
-        addButtonToVBox(vbox_button, "ce", "Composants Externes", this::useComposantExterne);
+        addSpaceInVBox();
+        
+        setupButton(actionsCollectible, "Mods Archéoniques", this::useModArcheo);
+        setupButton(actionsCollectible, "Mods Déclenchements", this::useModDeclenchement);
 
         addSpaceInVBox();
 
-        addButtonToVBox(vbox_button, "ma", "Mods Archéoniques", this::useModArcheo);
-        addButtonToVBox(vbox_button, "md", "Mods Déclenchements", this::useModDeclenchement);
-
-        addSpaceInVBox();
-
-        type_actif = Mod.TYPE_MOD.get(0);
         for (String modType : Mod.TYPE_MOD) {
-            addButtonToVBox(vbox_button, modType, modType, () -> {
-                type_actif = modType;
-                useMod(type_actif);
-            });
+            setupButton(actionsCollectible, modType, () -> useMod(modType));
         }
-        // Active le premier bouton au démarrage
-        setButton(type_actif);
-        useMod(type_actif);
+
+        switch (type_actif) {
+            case "Réacteurs" -> useReacteur();
+            case "Composants Externes" -> useComposantExterne();
+            case "Mods Archéoniques" -> useModArcheo();
+            case "Mods Déclenchements" -> useModDeclenchement();
+            default -> useMod(type_actif);
+        }
     }
 
+    // Initialisation des prereglages
     private void initPrereglage() throws IOException {
-        actionsPrereglage.put("auteur", () -> refreshPrereglage("auteur"));
-        actionsPrereglage.put("nom", () -> refreshPrereglage("nom"));
-        actionsPrereglage.put("date", () -> refreshPrereglage("date"));
-        actionsPrereglage.put("descendant", () -> refreshPrereglage("descendant"));
-        actionsPrereglage.put("motcle", () -> refreshPrereglage("motcle"));
-
-        addButtonToVBox(vbox_button, "auteur", "Auteur", () -> refreshPrereglage("auteur"));
-        addButtonToVBox(vbox_button, "nom", "Nom", () -> refreshPrereglage("nom"));
-        addButtonToVBox(vbox_button, "date", "Date", () -> refreshPrereglage("date"));
-        addButtonToVBox(vbox_button, "descendant", "Descendant", () -> refreshPrereglage("descendant"));
-        addButtonToVBox(vbox_button, "motcle", "Mot clé", () -> refreshPrereglage("motcle"));
+        setupButton(actionsPrereglage, "Auteur", () -> refreshPrereglage());
+        setupButton(actionsPrereglage, "Nom", () -> refreshPrereglage());
+        setupButton(actionsPrereglage, "Date", () -> refreshPrereglage());
+        setupButton(actionsPrereglage, "Descendant", () -> refreshPrereglage());
+        setupButton(actionsPrereglage, "Mot clé", () -> refreshPrereglage());
 
         usePrereglage();
     }
 
+    /* ------------------------- UTILITAIRES FXML ------------------------- */
     @FXML
     private void retour() throws IOException {
         Main.loadHomePage();
@@ -128,7 +118,7 @@ public class ControllerListPage {
         switch (type) {
             case "progression" -> addNewProgression();
             case "collectible" -> addNewCollectible();
-            case "prereglage" -> {
+            case "prereglage" -> {   // Ajouter une carte dans préréglage
                 Prereglage p = new Prereglage();
                 CollectionPrereglage.addPrereglage(p);
                 prereglageManager.addNewPrereglageCard(p);
@@ -137,92 +127,123 @@ public class ControllerListPage {
         }
     }
 
+    // Ajouter une carte dans progression
     private void addNewProgression() throws IOException {
-        if (isButtonDisabled("d")) {
-            Descendant d = new Descendant();
-            CollectionProgression.addDescendant(d);
-            progressionManager.addNewProgressionCard(progressionManager.getHBoxDescendant(), d, "d");
-            useDescendant();
-        } else if (isButtonDisabled("w")) {
-            Arme a = new Arme();
-            CollectionProgression.addArme(a);
-            progressionManager.addNewProgressionCard(progressionManager.getHBoxWeapon(), a, "w");
-            useArme();
-        } else if (isButtonDisabled("a")) {
-            Acolyte ac = new Acolyte();
-            CollectionProgression.addAcolyte(ac);
-            progressionManager.addNewProgressionCard(progressionManager.getHBoxAcolyte(), ac, "a");
-            useAcolyte();
-        } else if (isButtonDisabled("v")) {
-            Vehicule v = new Vehicule();
-            CollectionProgression.addVehicule(v);
-            progressionManager.addNewProgressionCard(progressionManager.getHBoxVehicule(), v, "v");
-            useVehicule();
+        switch (type_actif) {
+            case "Descendants" -> {
+                Descendant d = new Descendant();
+                CollectionProgression.addDescendant(d);
+                progressionManager.addNewProgressionCard(progressionManager.getHBoxDescendant(), d, "d");
+                useDescendant();
+            }
+            case "Armes" -> {
+                Arme a = new Arme();
+                CollectionProgression.addArme(a);
+                progressionManager.addNewProgressionCard(progressionManager.getHBoxWeapon(), a, "w");
+                useArme();
+            }
+            case "Acolytes" -> {
+                Acolyte ac = new Acolyte();
+                CollectionProgression.addAcolyte(ac);
+                progressionManager.addNewProgressionCard(progressionManager.getHBoxAcolyte(), ac, "a");
+                useAcolyte();
+            }
+            case "Véhicules" -> {
+                Vehicule v = new Vehicule();
+                CollectionProgression.addVehicule(v);
+                progressionManager.addNewProgressionCard(progressionManager.getHBoxVehicule(), v, "v");
+                useVehicule();
+            }
         }
     }
 
+    // Ajouter une carte dans collectible
     private void addNewCollectible() throws IOException {
-        if (isButtonDisabled("ce")) {
-            ComposantExterne ce = new ComposantExterne();
-            CollectionCollectible.addComposantExterne(ce);
-            collectibleManager.addNewComposantExterneCard(ce);
-            useComposantExterne();
-        }
-        else if (isButtonDisabled("ma")) {
-            ModArcheo ma = new ModArcheo();
-            CollectionCollectible.addModArcheo(ma);
-            collectibleManager.addNewModArcheoCard(ma);
-            useModArcheo();
-        }
-        else if (isButtonDisabled("md")) {
-            ModDeclenchement md = new ModDeclenchement();
-            CollectionCollectible.addModDeclenchement(md);
-            collectibleManager.addNewModDeclenchementCard(md);
-            useModDeclenchement();
-        }
-        else {
-            Mod m = new Mod();
-            m.setType(type_actif);
-            CollectionCollectible.addMod(m);
-            collectibleManager.addNewModCard(type_actif, m);
-            useMod(type_actif);
+        switch (type_actif) {
+            case "Réacteurs"  -> {}
+            case "Composants Externes" -> {
+                ComposantExterne ce = new ComposantExterne();
+                CollectionCollectible.addComposantExterne(ce);
+                collectibleManager.addNewComposantExterneCard(ce);
+                useComposantExterne();
+            }
+            case "Mods Archéoniques" -> {
+                ModArcheo ma = new ModArcheo();
+                CollectionCollectible.addModArcheo(ma);
+                collectibleManager.addNewModArcheoCard(ma);
+                useModArcheo();
+            }
+            case "Mods Déclenchements" -> {
+                ModDeclenchement md = new ModDeclenchement();
+                CollectionCollectible.addModDeclenchement(md);
+                collectibleManager.addNewModDeclenchementCard(md);
+                useModDeclenchement();
+            }
+            default -> {
+                Mod m = new Mod();
+                m.setType(type_actif);
+                CollectionCollectible.addMod(m);
+                collectibleManager.addNewModCard(type_actif, m);
+                useMod(type_actif);
+            }
         }
     }
 
     @FXML
     private void refresh() throws IOException {
+        System.out.println(type + " -> " + type_actif);
         switch (type) {
-            case "progression" -> actionsProgression.getOrDefault(getCurrentCode(), () -> {}).run();
-            case "collectible" -> actionsCollectible.getOrDefault(getCurrentCode(), () -> {}).run();
-            case "prereglage" -> actionsPrereglage.getOrDefault(getCurrentCode(), () -> {}).run();
+            case "progression" -> {
+                switch (type_actif) {
+                    case "Descendants" -> CollectionProgression.sortDescendant();
+                    case "Armes" -> CollectionProgression.sortArme();
+                    case "Acolyte" -> CollectionProgression.sortAcolyte();
+                    case "Véhicule" -> CollectionProgression.sortVehicule();
+                }
+                actionsProgression.get(type_actif).run();
+            }
+            case "collectible" -> {
+                switch (type_actif) {
+                    case "Réacteurs" -> CollectionCollectible.sortReacteur();
+                    case "Composants Externes" -> CollectionCollectible.sortComposantExterne();
+                    case "Mods Archéoniques" -> CollectionCollectible.sortModArcheo();
+                    case "Mods Déclenchements" -> CollectionCollectible.sortmodDeclenchement();
+                    default -> CollectionCollectible.sortMod(type_actif);
+                }
+                actionsCollectible.get(type_actif).run();
+            }
+            case "prereglage" -> refreshPrereglage();
         }
     }
 
-    private void refreshPrereglage(String sortKey) {
+    private void refreshPrereglage() {
         try {
-            setButton(sortKey);
-            CollectionPrereglage.sortPrereglage(sortKey);
-            prereglageManager.cardPrereglage();
+            setButton();
+            CollectionPrereglage.sortPrereglage(type_actif);
+            prereglageManager.refreshPrereglageCard();
             usePrereglage();
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    // --- Méthodes use ---
-    private void useDescendant() { displayCard(progressionManager.getHBoxDescendant()); setButton("d"); }
-    private void useArme() { displayCard(progressionManager.getHBoxWeapon()); setButton("w"); }
-    private void useAcolyte() { displayCard(progressionManager.getHBoxAcolyte()); setButton("a"); }
-    private void useVehicule() { displayCard(progressionManager.getHBoxVehicule()); setButton("v"); }
+    /* ------------------------- METHODES USE ------------------------- */
+    // Progression
+    private void useDescendant() throws IOException { displayCard(progressionManager.getHBoxDescendant()); setButton(); }
+    private void useArme() throws IOException{ displayCard(progressionManager.getHBoxWeapon()); setButton(); }
+    private void useAcolyte() throws IOException{ displayCard(progressionManager.getHBoxAcolyte()); setButton(); }
+    private void useVehicule() throws IOException{ displayCard(progressionManager.getHBoxVehicule()); setButton(); }
     
-    private void useReacteur() { displayCard(collectibleManager.getHBoxReacteur()); setButton("r"); }
-    private void useComposantExterne() { displayCard(collectibleManager.getHBoxComposantExterne()); setButton("ce"); }
-    private void useModArcheo() { displayCard(collectibleManager.getHBoxModArcheo()); setButton("ma"); }
-    private void useModDeclenchement() { displayCard(collectibleManager.getHBoxModDeclenchement()); setButton("md"); }
-    private void useMod(String type) {
+    // Collectible
+    private void useReacteur() throws IOException{ displayCard(collectibleManager.getHBoxReacteur()); setButton(); }
+    private void useComposantExterne() throws IOException{ displayCard(collectibleManager.getHBoxComposantExterne()); setButton(); }
+    private void useModArcheo() throws IOException{ displayCard(collectibleManager.getHBoxModArcheo()); setButton(); }
+    private void useModDeclenchement() throws IOException{ displayCard(collectibleManager.getHBoxModDeclenchement()); setButton(); }
+    private void useMod(String type) throws IOException {
         displayCard(collectibleManager.getHBoxMod(type));
         liste_buttons.forEach((k, btn) -> btn.setDisable(k.equals(type)));
     }
 
-    private void usePrereglage() { displayCard(prereglageManager.getHBoxPrereglage()); }
+    // Prereglage
+    private void usePrereglage() throws IOException { displayCard(prereglageManager.getHBoxPrereglage()); }
 
     // --- Outils ---
     private Button createButton(String txt) {
@@ -236,17 +257,25 @@ public class ControllerListPage {
         return button;
     }
 
-    // --- Méthode utilitaire pour ajouter un bouton ---
-    private Button addButtonToVBox(VBox vbox, String code, String label, Runnable action) {
+    // --- Méthode pour initialiser les boutons et la map --- //
+    private void setupButton(Map<String, IOAction> map, String label, IOAction action) {
+        type_actif = label;
+        map.put(label, action);
+        addButtonToVBox(label, action);
+    }
+
+    // --- Méthode utilitaire pour ajouter un bouton --- //
+    private Button addButtonToVBox(String label, IOAction action) {
         Button btn = createButton(label);
-        btn.setOnAction(e -> { 
+        btn.setOnAction(_ -> {
             try { 
                 action.run(); 
-                setButton(code); // Désactive tous les autres et active celui-ci
-            } catch (Exception ex) { ex.printStackTrace(); } 
+                type_actif = label;
+                setButton(); // Désactive tous les autres et active celui-ci
+            } catch (IOException e) { e.printStackTrace(); } 
         });
-        vbox.getChildren().add(btn);
-        liste_buttons.put(code, btn); // Ajout dans la Map
+        vbox_button.getChildren().add(btn);
+        liste_buttons.put(label, btn); // Ajout dans la Map
         return btn;
     }
 
@@ -256,28 +285,18 @@ public class ControllerListPage {
         vbox_button.getChildren().add(pane);
     }
 
+    // --- Méthode pour afficher les cartes --- //
     private void displayCard(List<HBox> hboxs) {
         vboxList.getChildren().setAll(hboxs);
     }
 
-    // --- Méthode pour vérifier si un bouton est actif ---
-    private boolean isButtonDisabled(String code) {
-        Button btn = liste_buttons.get(code);
-        return btn != null && btn.isDisable();
+    // --- Méthode pour activer/désactiver boutons --- //
+    private void setButton() {
+        liste_buttons.forEach((code, btn) -> btn.setDisable(code.equals(type_actif)));
     }
+}
 
-    private String getCurrentCode() {
-        // retourne le code du bouton actif selon type_actif
-        return switch (type) {
-            case "progression" -> actionsProgression.entrySet().stream().filter(e -> isButtonDisabled(e.getKey())).map(Map.Entry::getKey).findFirst().orElse("");
-            case "collectible" -> actionsCollectible.entrySet().stream().filter(e -> isButtonDisabled(e.getKey())).map(Map.Entry::getKey).findFirst().orElse("");
-            case "prereglage" -> actionsPrereglage.entrySet().stream().filter(e -> isButtonDisabled(e.getKey())).map(Map.Entry::getKey).findFirst().orElse("");
-            default -> "";
-        };
-    }
-
-    // --- Méthode pour activer/désactiver boutons ---
-    private void setButton(String activeCode) {
-        liste_buttons.forEach((code, btn) -> btn.setDisable(code.equals(activeCode)));
-    }
+// Pour éviter les bugs
+interface IOAction {
+    void run() throws IOException;
 }

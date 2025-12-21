@@ -22,7 +22,7 @@ public class ControllerModCard {
     @FXML
     private void initialize() {
         ComboboxItem factory = new ComboboxItem();
-        factory.setupComboBox(polariteMod, 15); // méthode utilitaire qui configure un ComboBox existant
+        factory.setupComboBox(polariteMod, 15);
         polariteMod.getItems().addAll(PolariteItem.getItems());
     }
 
@@ -34,11 +34,7 @@ public class ControllerModCard {
         imageMod.setImage(imageManager.getImage(mod.getImg(), 140, 190));
         niveauMaxMod.setText(mod.getNiveauMax());
         txtfieldmotcle.setText(mod.getMotCle());
-
-        String polariteKey = mod.getPolarite();
-        if (polariteKey != null) {
-            polariteMod.setValue(PolariteItem.getItemByPolarite(polariteKey));
-        }
+        polariteMod.setValue(PolariteItem.getItemByPolarite(mod.getPolarite()));
 
         addListeners();
     }
@@ -50,8 +46,9 @@ public class ControllerModCard {
 
         niveauMaxMod.textProperty().addListener((_, _, newVal) -> {
             mod.setNiveauMax(newVal);
-            if(!imgLinkMod.getText().contains("&enchant_level=") || imgLinkMod.getText() == null) {
-                String imgLink = imgLinkMod.getText() + "&enchant_level=%s:%s".formatted(newVal, newVal);
+            String imgLink = imgLinkMod.getText();
+            if(imgLink != null && !imgLink.contains("&enchant_level=") && !imgLink.isEmpty()) {
+                imgLink += "&enchant_level=%s:%s".formatted(newVal, newVal);
                 mod.setImg(imgLink);
                 imageMod.setImage(imageManager.getImage(imgLink, 140, 190));
             }

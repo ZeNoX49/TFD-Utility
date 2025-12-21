@@ -46,7 +46,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class ControllerPrereglageModifyPage {
+public class ControllerPrereglagePage {
 
     private ImageManager imageManager = ImageManager.getInstance();
     private PrereglageManager prereglageManager = PrereglageManager.getInstance();
@@ -604,29 +604,29 @@ public class ControllerPrereglageModifyPage {
 
     @FXML
     void modifyDescendant(ActionEvent event) throws IOException {
-        Main.switchScene("buildPage.fxml"); // "modifyBuildPage.fxml"
-        ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
+        Main.switchScene("prereglageBuildPage.fxml");
+        ControllerPrereglageBuildPage controller = (ControllerPrereglageBuildPage) Main.getCurrentController();
         controller.setDescendant(prereglage);
     }
 
     @FXML
     void modifyArme1(ActionEvent event) throws IOException {
-        Main.switchScene("buildPage.fxml");
-        ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
+        Main.switchScene("prereglageBuildPage.fxml");
+        ControllerPrereglageBuildPage controller = (ControllerPrereglageBuildPage) Main.getCurrentController();
         controller.setArme(prereglage, 1);
     }
 
     @FXML
     void modifyArme2(ActionEvent event) throws IOException {
-        Main.switchScene("buildPage.fxml");
-        ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
+        Main.switchScene("prereglageBuildPage.fxml");
+        ControllerPrereglageBuildPage controller = (ControllerPrereglageBuildPage) Main.getCurrentController();
         controller.setArme(prereglage, 2);
     }
 
     @FXML
     void modifyArme3(ActionEvent event) throws IOException {
-        Main.switchScene("buildPage.fxml");
-        ControllerBuildPage controller = (ControllerBuildPage) Main.getCurrentController();
+        Main.switchScene("prereglageBuildPage.fxml");
+        ControllerPrereglageBuildPage controller = (ControllerPrereglageBuildPage) Main.getCurrentController();
         controller.setArme(prereglage, 3);
     }
 
@@ -634,16 +634,16 @@ public class ControllerPrereglageModifyPage {
     void modifyBuildArcheo(ActionEvent event) {
         Integer idDescendant = prereglage.getIdDescendant();
         if(idDescendant != null) {
-            Main.switchScene("buildArcheoPage.fxml");
-            ControllerBuildArcheoPage controller = (ControllerBuildArcheoPage) Main.getCurrentController();
+            Main.switchScene("prereglageArcheoPage.fxml");
+            ControllerPrereglageArcheoPage controller = (ControllerPrereglageArcheoPage) Main.getCurrentController();
             controller.setPrereglage(prereglage);
         }
     }
 
     @FXML
     void modifyReacteurCompExt(ActionEvent event) {
-        // Main.switchScene("modifyComposantExternePage.fxml");
-        // ControllerModifyComposantExternePage controller = (ControllerModifyComposantExternePage) Main.getCurrentController();
+        // Main.switchScene("prereglageComposantPage.fxml");
+        // ControllerPrereglageReacteurComposantPage controller = (ControllerPrereglageReacteurComposantPage) Main.getCurrentController();
         // controller.setPrereglage(prereglage);
     }
 

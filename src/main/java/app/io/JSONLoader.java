@@ -1,6 +1,7 @@
 package app.io;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,16 +29,23 @@ import app.pojo.collectible.ModPOJO;
 import app.pojo.collectible.ReacteurPOJO;
 import app.pojo.prereglage.PrereglagePOJO;
 import app.pojo.prereglage.PrereglagesPOJO;
-import app.pojo.progression.AcolytePOJO;
-import app.pojo.progression.ArmePOJO;
-import app.pojo.progression.DescendantPOJO;
-import app.pojo.progression.ProgressionPOJO;
-import app.pojo.progression.VehiculePOJO;
+import app.pojo.progression.dev.DevAcolytePOJO;
+import app.pojo.progression.dev.DevArmePOJO;
+import app.pojo.progression.dev.DevDescendantPOJO;
+import app.pojo.progression.dev.DevProgressionPOJO;
+import app.pojo.progression.dev.DevVehiculePOJO;
+import app.pojo.progression.user.UserAcolytePOJO;
+import app.pojo.progression.user.UserArmePOJO;
+import app.pojo.progression.user.UserDescendantPOJO;
+import app.pojo.progression.user.UserProgressionPOJO;
+import app.pojo.progression.user.UserVehiculePOJO;
 
 public class JSONLoader {
-    private static final String PATH_PROGRESSION = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\progression.json";
-    private static final String PATH_COLLECTIBLE = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\collectible.json";
-    private static final String PATH_PREREGLAGE = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\prereglage.json";
+    private static final String PATH_PROGRESSION_DEV = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\dev\\progression.json";
+    private static final String PATH_COLLECTIBLE_DEV = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\dev\\collectible.json";
+
+    private static final String PATH_PROGRESSION_USER = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\user\\progression.json";
+    private static final String PATH_PREREGLAGE_USER = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\user\\prereglage.json";
 
     private static ObjectMapper objectMapper;
 
@@ -52,37 +60,112 @@ public class JSONLoader {
 
     private static void loadProgression() throws IOException {
         try {
-            File file = new File(PATH_PROGRESSION);
-
-            if (!file.exists()) {
+            File devFile = new File(PATH_PROGRESSION_DEV);
+            if (!devFile.exists()) {
                 System.err.println("Repertoire courant : " + System.getProperty("user.dir"));
-                System.err.println("Erreur : Le fichier " + PATH_PROGRESSION + " est introuvable.");
+                System.err.println("Erreur : Le fichier " + PATH_PROGRESSION_DEV + " est introuvable.");
                 return;
             }
+            var devProgressionPOJO = objectMapper.readValue(devFile, DevProgressionPOJO.class);
 
-            ProgressionPOJO progressionPOJO = objectMapper.readValue(file, ProgressionPOJO.class);
+            UserProgressionPOJO userProgressionPOJO;
+            File userFile = new File(PATH_PROGRESSION_USER);
+            if (userFile.exists()) {
+                userProgressionPOJO = objectMapper.readValue(devFile, UserProgressionPOJO.class);
+            } else {
+                try {
+                    FileWriter writer = new FileWriter(PATH_PROGRESSION_USER);
+                    writer.write("{}");
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                userProgressionPOJO = new UserProgressionPOJO();
+
+                for(int i = 0; i < devProgressionPOJO.descendants.length; i++) {
+                    DevDescendantPOJO descendant = devProgressionPOJO.descendants[i];
+                    userProgressionPOJO.descendants[i].id_descendant = descendant.id_descendant;
+                    userProgressionPOJO.descendants[i].cellule_owned = 0;
+                    userProgressionPOJO.descendants[i].cellule_schema = 0;
+                    userProgressionPOJO.descendants[i].stabilisateur_owned = 0;
+                    userProgressionPOJO.descendants[i].stabilisateur_schema = 0;
+                    userProgressionPOJO.descendants[i].catalyseur_owned = 0;
+                    userProgressionPOJO.descendants[i].catalyseur_schema = 0;
+                    userProgressionPOJO.descendants[i].code_owned = 0;
+                    userProgressionPOJO.descendants[i].isCraft = false;
+                }
+
+                for(int i = 0; i < devProgressionPOJO.armes.length; i++) {
+                    DevArmePOJO descendant = devProgressionPOJO.armes[i];
+                    userProgressionPOJO.armes[i].id_arme = descendant.id_arme;
+                    userProgressionPOJO.armes[i].polymere_owned = 0;
+                    userProgressionPOJO.armes[i].polymere_schema = 0;
+                    userProgressionPOJO.armes[i].fibre_owned = 0;
+                    userProgressionPOJO.armes[i].fibre_schema = 0;
+                    userProgressionPOJO.armes[i].nanotubes_owned = 0;
+                    userProgressionPOJO.armes[i].nanotubes_schema = 0;
+                    userProgressionPOJO.armes[i].schema = 0;
+                    userProgressionPOJO.armes[i].nbCraft = 0;
+                }
+
+                for(int i = 0; i < devProgressionPOJO.acolytes.length; i++) {
+                    DevAcolytePOJO descendant = devProgressionPOJO.acolytes[i];
+                    userProgressionPOJO.acolytes[i].id_acolyte = descendant.id_acolyte;
+                    userProgressionPOJO.acolytes[i].cellule_owned = 0;
+                    userProgressionPOJO.acolytes[i].cellule_schema = 0;
+                    userProgressionPOJO.acolytes[i].stabilisateur_owned = 0;
+                    userProgressionPOJO.acolytes[i].stabilisateur_schema = 0;
+                    userProgressionPOJO.acolytes[i].catalyseur_owned = 0;
+                    userProgressionPOJO.acolytes[i].catalyseur_schema = 0;
+                    userProgressionPOJO.acolytes[i].code_owned = 0;
+                    userProgressionPOJO.acolytes[i].isCraft = false;
+                }
+
+                for(int i = 0; i < devProgressionPOJO.vehicules.length; i++) {
+                    DevVehiculePOJO descendant = devProgressionPOJO.vehicules[i];
+                    userProgressionPOJO.vehicules[i].id_vehicule = descendant.id_vehicule;
+                    userProgressionPOJO.vehicules[i].moteur_owned = 0;
+                    userProgressionPOJO.vehicules[i].moteur_schema = 0;
+                    userProgressionPOJO.vehicules[i].commande_owned = 0;
+                    userProgressionPOJO.vehicules[i].commande_schema = 0;
+                    userProgressionPOJO.vehicules[i].schema_owned = 0;
+                    userProgressionPOJO.vehicules[i].schema_schema = 0;
+                    userProgressionPOJO.vehicules[i].systeme_owned = 0;
+                    userProgressionPOJO.vehicules[i].isCraft = false;
+                }
+            }
 
             // Descendants
-            for (DescendantPOJO descendantPOJO : progressionPOJO.descendants) {
-                Descendant descendant = new Descendant(descendantPOJO);
+            for(int i = 0; i < devProgressionPOJO.descendants.length; i++) {
+                DevDescendantPOJO devDescendant = devProgressionPOJO.descendants[i];
+                UserDescendantPOJO userDescendant = userProgressionPOJO.descendants[i];
+                Descendant descendant = new Descendant(devDescendant, userDescendant);
                 CollectionProgression.addDescendant(descendant);
             }
                 
             // Weapons
-            for (ArmePOJO armePOJO : progressionPOJO.armes) {
-                Arme arme = new Arme(armePOJO);
+            for(int i = 0; i < devProgressionPOJO.armes.length; i++) {
+                DevArmePOJO devArme = devProgressionPOJO.armes[i];
+                UserArmePOJO userArme = userProgressionPOJO.armes[i];
+                Arme arme = new Arme(devArme, userArme);
                 CollectionProgression.addArme(arme);
             }
 
             // Acolytes
-            for (AcolytePOJO acolytePOJO : progressionPOJO.acolytes) {
-                Acolyte acolyte = new Acolyte(acolytePOJO);
+            for(int i = 0; i < devProgressionPOJO.acolytes.length; i++) {
+                DevAcolytePOJO devAcolyte = devProgressionPOJO.acolytes[i];
+                UserAcolytePOJO userAcolyte = userProgressionPOJO.acolytes[i];
+                Acolyte acolyte = new Acolyte(devAcolyte, userAcolyte);
                 CollectionProgression.addAcolyte(acolyte);
             }
 
             // Vehicules
-            for (VehiculePOJO vehiculePOJO : progressionPOJO.vehicules) {
-                Vehicule vehicule = new Vehicule(vehiculePOJO);
+            for(int i = 0; i < devProgressionPOJO.vehicules.length; i++) {
+                DevVehiculePOJO devVehicule = devProgressionPOJO.vehicules[i];
+                UserVehiculePOJO userVehicule = userProgressionPOJO.vehicules[i];
+                Vehicule vehicule = new Vehicule(devVehicule, userVehicule);
                 CollectionProgression.addVehicule(vehicule);
             }
 
@@ -97,11 +180,11 @@ public class JSONLoader {
 
     private static void loadCollectible() throws IOException {
         try {
-            File file = new File(PATH_COLLECTIBLE);
+            File file = new File(PATH_COLLECTIBLE_DEV);
 
             if (!file.exists()) {
                 System.err.println("Repertoire courant : " + System.getProperty("user.dir"));
-                System.err.println("Erreur : Le fichier " + PATH_COLLECTIBLE + " est introuvable.");
+                System.err.println("Erreur : Le fichier " + PATH_COLLECTIBLE_DEV + " est introuvable.");
                 return;
             }
 
@@ -148,11 +231,11 @@ public class JSONLoader {
 
     private static void loadPrereglage() throws IOException {
         try {
-            File file = new File(PATH_PREREGLAGE);
+            File file = new File(PATH_PREREGLAGE_USER);
 
             if (!file.exists()) {
                 System.err.println("Repertoire courant : " + System.getProperty("user.dir"));
-                System.err.println("Erreur : Le fichier " + PATH_PREREGLAGE + " est introuvable.");
+                System.err.println("Erreur : Le fichier " + PATH_PREREGLAGE_USER + " est introuvable.");
                 return;
             }
 

@@ -1,6 +1,7 @@
 package app.controller.page;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +35,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class ControllerBuildArcheoPage {
+public class ControllerPrereglageArcheoPage {
     private ImageManager imageManager = ImageManager.getInstance();
 
     private Prereglage prereglage;
@@ -47,6 +48,7 @@ public class ControllerBuildArcheoPage {
     @FXML private StackPane spModArcheo;
 
     @FXML private VBox vboxArcheo1, vboxArcheo2, vboxArcheo3, vboxArcheo4;
+    private Map<String, ControllerModArcheoCardDisplay> mapModArcheo = new HashMap<>();
     @FXML private ImageView polariteArcheo1, polariteArcheo2, polariteArcheo3, polariteArcheo4;
     @FXML private StackPane spArcheo1, spArcheo2, spArcheo3, spArcheo4;
     private ControllerModArcheoCardDisplay controllerModArcheo1, controllerModArcheo2, controllerModArcheo3, controllerModArcheo4;
@@ -131,14 +133,46 @@ public class ControllerBuildArcheoPage {
         }
 
         polariteArcheo1.setImage(imageManager.getImage(Mod.POLARITE.get("blanc").get(descendant.getTypeModArcheonique1()), 75, 75));
+        mapModArcheo.put(descendant.getTypeModArcheonique1(), controllerModArcheo1);
         polariteArcheo2.setImage(imageManager.getImage(Mod.POLARITE.get("blanc").get(descendant.getTypeModArcheonique2()), 75, 75));
+        mapModArcheo.put(descendant.getTypeModArcheonique2(), controllerModArcheo2);
         polariteArcheo3.setImage(imageManager.getImage(Mod.POLARITE.get("blanc").get(descendant.getTypeModArcheonique3()), 75, 75));
+        mapModArcheo.put(descendant.getTypeModArcheonique3(), controllerModArcheo3);
         polariteArcheo4.setImage(imageManager.getImage(Mod.POLARITE.get("blanc").get(descendant.getTypeModArcheonique4()), 75, 75));
+        mapModArcheo.put(descendant.getTypeModArcheonique4(), controllerModArcheo4);
 
         cbArcheo1.setItems(getNameModArcheo(CollectionCollectible.getModArcheoBypolarite(descendant.getTypeModArcheonique1())));
         cbArcheo2.setItems(getNameModArcheo(CollectionCollectible.getModArcheoBypolarite(descendant.getTypeModArcheonique2())));
         cbArcheo3.setItems(getNameModArcheo(CollectionCollectible.getModArcheoBypolarite(descendant.getTypeModArcheonique3())));
         cbArcheo4.setItems(getNameModArcheo(CollectionCollectible.getModArcheoBypolarite(descendant.getTypeModArcheonique4())));
+
+        List<String> listPolarite = new ArrayList<>();
+        listPolarite.add(descendant.getTypeModArcheonique1());
+        listPolarite.add(descendant.getTypeModArcheonique2());
+        listPolarite.add(descendant.getTypeModArcheonique3());
+        listPolarite.add(descendant.getTypeModArcheonique4());
+
+        Integer idModArcheo1 = prereglage.getIdModArcheo1();
+        if(idModArcheo1 != null) {
+            ModArcheo modArcheo1 = CollectionCollectible.getModArcheoById(prereglage.getIdModArcheo1());
+            for(String polarite1 : listPolarite) {
+                if(polarite1.equals(modArcheo1.getPolarite())) {
+                    mapModArcheo.get(modArcheo1.getPolarite()).setModArcheo(modArcheo1);
+                    break;
+                }
+            }
+        }
+
+        Integer idModArcheo2 = prereglage.getIdModArcheo2();
+        if(idModArcheo2 != null) {
+            ModArcheo modArcheo2 = CollectionCollectible.getModArcheoById(prereglage.getIdModArcheo2());
+            for(String polarite2 : listPolarite) {
+                if(polarite2.equals(modArcheo2.getPolarite())) {
+                    mapModArcheo.get(modArcheo2.getPolarite()).setModArcheo(modArcheo2);
+                    break;
+                }
+            }
+        }
 
         // saison
         for(int y = 0; y < 5; y++) {
@@ -304,46 +338,38 @@ public class ControllerBuildArcheoPage {
 
     @FXML
     void retour(ActionEvent event) throws IOException {
-        Main.switchScene("prereglageModifyPage.fxml");
-        ControllerPrereglageModifyPage controller = (ControllerPrereglageModifyPage) Main.getCurrentController();
+        Main.switchScene("prereglagePage.fxml");
+        ControllerPrereglagePage controller = (ControllerPrereglagePage) Main.getCurrentController();
         controller.setPrereglage(prereglage);
     }
 
     private void addListeners() {
-        Integer idModArcheo1 = prereglage.getIdModArcheo1();
-        Integer idModArcheo2 = prereglage.getIdModArcheo2();
+        setupArcheoListener(cbArcheo1, controllerModArcheo1);
+        setupArcheoListener(cbArcheo2, controllerModArcheo2);
+        setupArcheoListener(cbArcheo3, controllerModArcheo3);
+        setupArcheoListener(cbArcheo4, controllerModArcheo4);
+    }
 
-        cbArcheo1.valueProperty().addListener((_, _, newValue) -> {
+    private void setupArcheoListener(ComboBox<String> cb, ControllerModArcheoCardDisplay controller) {
+        cb.valueProperty().addListener((_, oldValue, newValue) -> {
             if(newValue != null) {
-                controllerModArcheo1.setModArcheo(CollectionCollectible.getModArcheoByName(newValue));
-                if(idModArcheo1 != null) { prereglage.setIdModArcheo1(controllerModArcheo1.getModArcheo().getIdModArcheo()); }
-                else if(idModArcheo2 == null) { prereglage.setIdModArcheo2(controllerModArcheo1.getModArcheo().getIdModArcheo()); }
-                else { Main.addTextErreur("IdModArcheo", "ControllerBuildArcheoPage", "addListeners"); }
-            }
-        });
-        cbArcheo2.valueProperty().addListener((_, _, newValue) -> {
-            if(newValue != null) {
-                controllerModArcheo2.setModArcheo(CollectionCollectible.getModArcheoByName(newValue));
-                if(idModArcheo1 != null) { prereglage.setIdModArcheo1(controllerModArcheo2.getModArcheo().getIdModArcheo()); }
-                else if(idModArcheo2 == null) { prereglage.setIdModArcheo2(controllerModArcheo2.getModArcheo().getIdModArcheo()); }
-                else { Main.addTextErreur("IdModArcheo", "ControllerBuildArcheoPage", "addListeners"); }
-            }
-        });
-        cbArcheo3.valueProperty().addListener((_, _, newValue) -> {
-            if(newValue != null) {
-                controllerModArcheo3.setModArcheo(CollectionCollectible.getModArcheoByName(newValue));
-                if(idModArcheo1 != null) { prereglage.setIdModArcheo1(controllerModArcheo3.getModArcheo().getIdModArcheo()); }
-                else if(idModArcheo2 == null) { prereglage.setIdModArcheo2(controllerModArcheo3.getModArcheo().getIdModArcheo()); }
-                else { Main.addTextErreur("IdModArcheo", "ControllerBuildArcheoPage", "addListeners"); }
-            }
-        });
-        cbArcheo4.valueProperty().addListener((_, _, newValue) -> {
-            if(newValue != null) {
-                controllerModArcheo4.setModArcheo(CollectionCollectible.getModArcheoByName(newValue));
-                if(idModArcheo1 != null) { prereglage.setIdModArcheo1(controllerModArcheo4.getModArcheo().getIdModArcheo()); }
-                else if(idModArcheo2 == null) { prereglage.setIdModArcheo2(controllerModArcheo4.getModArcheo().getIdModArcheo()); }
-                else { Main.addTextErreur("IdModArcheo", "ControllerBuildArcheoPage", "addListeners"); }
+                Integer idModArcheo1 = prereglage.getIdModArcheo1();
+                Integer idModArcheo2 = prereglage.getIdModArcheo2();
+
+                ModArcheo oldMod = CollectionCollectible.getModArcheoByName(oldValue);
+                controller.setModArcheo(CollectionCollectible.getModArcheoByName(newValue));
+
+                if(idModArcheo1 == null || idModArcheo1 == oldMod.getIdModArcheo()) {
+                    prereglage.setIdModArcheo1(controller.getModArcheo().getIdModArcheo());
+                }
+                else if(idModArcheo2 == null || idModArcheo2 == oldMod.getIdModArcheo()) {
+                    prereglage.setIdModArcheo2(controller.getModArcheo().getIdModArcheo());
+                }
+                else {
+                    Main.addTextErreur("IdModArcheo", "ControllerBuildArcheoPage", "addListeners");
+                }
             }
         });
     }
+
 }

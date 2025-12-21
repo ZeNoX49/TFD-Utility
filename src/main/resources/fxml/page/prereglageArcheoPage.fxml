@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="840.0" prefWidth="1540.0" style="-fx-background-color: #505050ff;" stylesheets="@../../css/combobox.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.page.ControllerBuildArcheoPage">
+<AnchorPane prefHeight="840.0" prefWidth="1540.0" style="-fx-background-color: #505050ff;" stylesheets="@../../css/combobox.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.page.ControllerPrereglageArcheoPage">
    <children>
       <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#retour" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;">
          <graphic>

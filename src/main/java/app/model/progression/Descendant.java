@@ -1,13 +1,14 @@
 package app.model.progression;
 
 import app.model.ID;
-import app.pojo.progression.DescendantPOJO;
+import app.pojo.progression.dev.DevDescendantPOJO;
+import app.pojo.progression.user.UserDescendantPOJO;
 
 public class Descendant extends Progression {
 
     private static int id = -1;
     
-    private int idDescendant;
+    private final int idDescendant;
     private String typeModArcheonique1;
     private String typeModArcheonique2;
     private String typeModArcheonique3;
@@ -18,7 +19,7 @@ public class Descendant extends Progression {
         setMat_2("Stabilisateur");
         setMat_3("Catalyseur");
         setMat_4("Code");
-        setNecessaire("1");
+        setNecessaire(1);
     }
 
     public Descendant() {
@@ -27,13 +28,13 @@ public class Descendant extends Progression {
         setDescendant();
         setName("");
         setImage("");
-        setConstruit_1("0");
-        setConstruit_2("0");
-        setConstruit_3("0");
-        setConstruit_4("0");
-        setSchema_1("0");
-        setSchema_2("0");
-        setSchema_3("0");
+        setConstruit_1(0);
+        setConstruit_2(0);
+        setConstruit_3(0);
+        setConstruit_4(0);
+        setSchema_1(0);
+        setSchema_2(0);
+        setSchema_3(0);
         setCraft(false);
         this.typeModArcheonique1 = "";
         this.typeModArcheonique2 = "";
@@ -41,24 +42,24 @@ public class Descendant extends Progression {
         this.typeModArcheonique4 = "";
     }
 
-    public Descendant(DescendantPOJO descendantPOJO) {
-        id = ID.updateID(id, descendantPOJO.id_descendant);
-        this.idDescendant = descendantPOJO.id_descendant;
+    public Descendant(DevDescendantPOJO devDescendantPOJO, UserDescendantPOJO userDescendantPOJO) {
+        id = ID.updateID(id, devDescendantPOJO.id_descendant);
+        this.idDescendant = devDescendantPOJO.id_descendant;
         setDescendant();
-        setName(descendantPOJO.nom);
-        setImage(descendantPOJO.img);
-        setConstruit_1(descendantPOJO.cellule_owned);
-        setConstruit_2(descendantPOJO.stabilisateur_owned);
-        setConstruit_3(descendantPOJO.catalyseur_owned);
-        setConstruit_4(descendantPOJO.code_owned);
-        setSchema_1(descendantPOJO.cellule_schema);
-        setSchema_2(descendantPOJO.stabilisateur_schema);
-        setSchema_3(descendantPOJO.catalyseur_schema);
-        setCraft(descendantPOJO.isCraft.equals("y"));
-        this.typeModArcheonique1 = descendantPOJO.type_mod_archeonique_1;
-        this.typeModArcheonique2 = descendantPOJO.type_mod_archeonique_2;
-        this.typeModArcheonique3 = descendantPOJO.type_mod_archeonique_3;
-        this.typeModArcheonique4 = descendantPOJO.type_mod_archeonique_4;
+        setName(devDescendantPOJO.nom);
+        setImage(devDescendantPOJO.img);
+        setConstruit_1(userDescendantPOJO.cellule_owned);
+        setConstruit_2(userDescendantPOJO.stabilisateur_owned);
+        setConstruit_3(userDescendantPOJO.catalyseur_owned);
+        setConstruit_4(userDescendantPOJO.code_owned);
+        setSchema_1(userDescendantPOJO.cellule_schema);
+        setSchema_2(userDescendantPOJO.stabilisateur_schema);
+        setSchema_3(userDescendantPOJO.catalyseur_schema);
+        setCraft(userDescendantPOJO.isCraft);
+        this.typeModArcheonique1 = devDescendantPOJO.type_mod_archeonique_1;
+        this.typeModArcheonique2 = devDescendantPOJO.type_mod_archeonique_2;
+        this.typeModArcheonique3 = devDescendantPOJO.type_mod_archeonique_3;
+        this.typeModArcheonique4 = devDescendantPOJO.type_mod_archeonique_4;
     }
 
     public void setTypeModArcheonique1(String type) { this.typeModArcheonique1 = type; }

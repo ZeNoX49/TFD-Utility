@@ -29,23 +29,15 @@ public class CollectibleManager extends Manager {
         }
         return instance;
     }
-    
-    private List<HBox> hbox_reacteur, hbox_composantExterne, hbox_modArcheo, hbox_modDeclenchement;
-    private Map<String, List<HBox>> liste_hbox_mod;
 
-    public void initialize() throws IOException {
-        liste_hbox_mod = new HashMap<>();
+    /* ---------- Réacteur ---------- */
+    private List<HBox> hbox_reacteur;
 
-        setCardReacteur();
-        setCardcomposantExterne();
-
-        setCardModArcheo();
-        setCardModDeclenchement();
-
-        for(String k : Mod.TYPE_MOD) { 
-            liste_hbox_mod.put(k, new ArrayList<>());
-            setCardMod(k);
+    public List<HBox> getHBoxReacteur() throws IOException {
+        if(hbox_reacteur == null || hbox_reacteur.isEmpty()) {
+            setCardReacteur();
         }
+        return hbox_reacteur;
     }
 
     public void setCardReacteur() throws IOException {
@@ -62,9 +54,64 @@ public class CollectibleManager extends Manager {
         hbox_reacteur.add(hbox);
     }
 
+    /* ---------- Composant externe ---------- */
+    private List<HBox> hbox_composantExterne;
+
+    public List<HBox> getHBoxComposantExterne() throws IOException {
+        if(hbox_reacteur == null || hbox_reacteur.isEmpty()) {
+            setCardcomposantExterne();
+        }
+        return hbox_composantExterne;
+    }
+
     public void setCardcomposantExterne() throws IOException {
         Main.addTextLoad("\nComposants Externes :");
         hbox_composantExterne = createComposantExterneCard();
+    }
+
+    public List<HBox> createComposantExterneCard() throws IOException {
+        List<HBox> hboxs = new ArrayList<>();
+        HBox hbox = createHBox(45, 1305, 210);
+        hboxs.add(hbox);
+        for(ComposantExterne composantExterne : CollectionCollectible.getComposantExterne()) {
+            Main.addTextLoad(" - " + composantExterne.getNom());
+            Pane cardPane = getCardPaneComposantexterne(composantExterne);
+            hbox.getChildren().add(cardPane);
+    		if(hbox.getChildren().size() == 2) {
+                hbox = createHBox(45, 1305, 210);
+    			hboxs.add(hbox);
+    		}
+        }
+
+        return hboxs;
+    }
+
+    public void addNewComposantExterneCard(ComposantExterne composantExterne) throws IOException {
+        HBox hbox = hbox_composantExterne.get(hbox_composantExterne.size() - 1);
+        if(hbox.getChildren().size() == 2) {
+            hbox = createHBox(45, 1305, 210);
+            hbox_composantExterne.add(hbox);
+        }
+        Pane cardPane = getCardPaneComposantexterne(composantExterne);
+        hbox.getChildren().add(cardPane);
+    }
+
+    private Pane getCardPaneComposantexterne(ComposantExterne composantExterne) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/composantExterneCard.fxml"));
+        Pane cardPane = loader.load();
+        ControllerComposantExterneCard controller = loader.getController();
+        controller.setComposantExterne(composantExterne);
+        return cardPane;
+    }
+
+    /* ---------- Mod archéonique ---------- */
+    private List<HBox> hbox_modArcheo;
+
+    public List<HBox> getHBoxModArcheo() throws IOException {
+        if(hbox_modArcheo == null || hbox_modArcheo.isEmpty()) {
+            setCardModArcheo();
+        }
+        return hbox_modArcheo;
     }
 
     public void setCardModArcheo() throws IOException {
@@ -72,9 +119,97 @@ public class CollectibleManager extends Manager {
         hbox_modArcheo = createModArcheoCard();
     }
 
+     public List<HBox> createModArcheoCard() throws IOException {
+        List<HBox> hboxs = new ArrayList<>();
+        HBox hbox = createHBox(25, 1305, 290);
+        hboxs.add(hbox);
+        for (ModArcheo modArcheo : CollectionCollectible.getModArcheo()) {
+            Main.addTextLoad(" - " + modArcheo.getNom());
+            Pane cardPane = getCardPaneModArcheo(modArcheo);
+            hbox.getChildren().add(cardPane);
+    		if(hbox.getChildren().size() == 8) {
+                hbox = createHBox(25, 1305, 290);
+    			hboxs.add(hbox);
+    		}
+        }
+        return hboxs;
+    }
+
+    public void addNewModArcheoCard(ModArcheo modArcheo) throws IOException {
+        HBox hbox = hbox_modArcheo.get(hbox_modArcheo.size() - 1);
+        if(hbox.getChildren().size() == 8) {
+            hbox = createHBox(25, 1305, 290);
+            hbox_modArcheo.add(hbox);
+        }
+        Pane cardPane = getCardPaneModArcheo(modArcheo);
+        hbox.getChildren().add(cardPane);
+    }
+
+    private Pane getCardPaneModArcheo(ModArcheo modArcheo) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modArcheoCard.fxml"));
+        Pane cardPane = loader.load();
+        ControllerModArcheoCard controller = loader.getController();
+        controller.setModArcheo(modArcheo);
+        return cardPane;
+    }
+
+    /* ---------- Mod déclenchement ---------- */
+    private List<HBox> hbox_modDeclenchement;
+
+    public List<HBox> getHBoxModDeclenchement() throws IOException {
+        if(hbox_modDeclenchement == null || hbox_modDeclenchement.isEmpty()) {
+            setCardModDeclenchement();
+        }
+        return hbox_modDeclenchement;
+    }
+
     public void setCardModDeclenchement() throws IOException {
         Main.addTextLoad("\nMods Déclenchements :");
         hbox_modDeclenchement = createModDeclenchementCard();
+    }
+
+     public List<HBox> createModDeclenchementCard() throws IOException {
+        List<HBox> hboxs = new ArrayList<>();
+        HBox hbox = createHBox(25, 1305, 220);
+        hboxs.add(hbox);
+        for (ModDeclenchement modDeclenchement : CollectionCollectible.getModDeclenchement()) {
+            Main.addTextLoad(" - " + modDeclenchement.getNom());
+            Pane cardPane = getCardPaneModDeclenchement(modDeclenchement);
+            hbox.getChildren().add(cardPane);
+    		if(hbox.getChildren().size() == 8) {
+                hbox = createHBox(25, 1305, 220);
+    			hboxs.add(hbox);
+    		}
+        }
+        return hboxs;
+    }
+
+    public void addNewModDeclenchementCard(ModDeclenchement modDeclenchement) throws IOException {
+        HBox hbox = hbox_modDeclenchement.get(hbox_modDeclenchement.size() - 1);
+        if(hbox.getChildren().size() == 8) {
+            hbox = createHBox(25, 1305, 220);
+            hbox_modDeclenchement.add(hbox);
+        }
+        Pane cardPane = getCardPaneModDeclenchement(modDeclenchement);
+        hbox.getChildren().add(cardPane);
+    }
+
+    private Pane getCardPaneModDeclenchement(ModDeclenchement modDeclenchement) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modDeclenchementCard.fxml"));
+        Pane cardPane = loader.load();
+        ControllerModDeclenchementCard controller = loader.getController();
+        controller.setModDeclenchement(modDeclenchement);
+        return cardPane;
+    }
+
+    /* ---------- Mods ---------- */
+    private Map<String, List<HBox>> liste_hbox_mod = new HashMap<>();
+
+    public List<HBox> getHBoxMod(String type) throws IOException {
+        if(!liste_hbox_mod.containsKey(type)) {
+            setCardMod(type);
+        }
+        return liste_hbox_mod.get(type);
     }
 
     public void setCardMod(String type) throws IOException {
@@ -82,215 +217,38 @@ public class CollectibleManager extends Manager {
         liste_hbox_mod.put(type, createModCard(type));
     }
 
-    public List<HBox> createComposantExterneCard() throws IOException {
-        List<HBox> hboxs = new ArrayList<>();
-        HBox hbox = createHBox(45, 1305, 210);
-
-        for (ComposantExterne composantExterne : CollectionCollectible.getComposantExterne()) {
-            Main.addTextLoad(" - " + composantExterne.getNom());
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/composantExterneCard.fxml"));
-            Pane cardPane = loader.load();
-            ControllerComposantExterneCard controller = loader.getController();
-            controller.setComposantExterne(composantExterne);
-
-            hbox.getChildren().add(cardPane);
-    		if(hbox.getChildren().size() == 2) {
-    			hboxs.add(hbox);
-    			hbox = createHBox(45, 1305, 210);
-    		}
-        }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
-        }
-
-        return hboxs;
-    }
-
-    public void addNewComposantExterneCard(ComposantExterne composantExterne) throws IOException {
-        HBox hbox;
-        boolean toAdd;
-        if(hbox_composantExterne.get(hbox_composantExterne.size() - 1).getChildren().size() != 2) {
-            hbox = hbox_composantExterne.get(hbox_composantExterne.size() - 1);
-            toAdd = false;
-        }
-        else {
-            hbox = createHBox(45, 1305, 210);
-            toAdd = true;
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/composantExterneCard.fxml"));
-        Pane cardPane = loader.load();
-        ControllerComposantExterneCard controller = loader.getController();
-        controller.setComposantExterne(composantExterne);
-
-        hbox.getChildren().add(cardPane);
-        if(toAdd) {
-            hbox_composantExterne.add(hbox);
-        }
-    }
-
-     public List<HBox> createModArcheoCard() throws IOException {
-        List<HBox> hboxs = new ArrayList<>();
-        HBox hbox = createHBox(25, 1305, 290);
-
-        for (ModArcheo modArcheo : CollectionCollectible.getModArcheo()) {
-            Main.addTextLoad(" - " + modArcheo.getNom());
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modArcheoCard.fxml"));
-            Pane cardPane = loader.load();
-            ControllerModArcheoCard controller = loader.getController();
-            controller.setModArcheo(modArcheo);
-
-            hbox.getChildren().add(cardPane);
-    		if(hbox.getChildren().size() == 8) {
-    			hboxs.add(hbox);
-    			hbox = createHBox(25, 1305, 290);
-    		}
-        }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
-        }
-
-        return hboxs;
-    }
-
-    public void addNewModArcheoCard(ModArcheo modArcheo) throws IOException {
-        HBox hbox;
-        boolean toAdd;
-        if(hbox_modArcheo.get(hbox_modArcheo.size() - 1).getChildren().size() != 8) {
-            hbox = hbox_modArcheo.get(hbox_modArcheo.size() - 1);
-            toAdd = false;
-        }
-        else {
-            hbox = createHBox(25, 1305, 290);
-            toAdd = true;
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modArcheoCard.fxml"));
-        Pane cardPane = loader.load();
-        ControllerModArcheoCard controller = loader.getController();
-        controller.setModArcheo(modArcheo);
-
-        hbox.getChildren().add(cardPane);
-        if(toAdd) {
-            hbox_modArcheo.add(hbox);
-        }
-    }
-
-     public List<HBox> createModDeclenchementCard() throws IOException {
-        List<HBox> hboxs = new ArrayList<>();
-        HBox hbox = createHBox(25, 1305, 220);
-
-        for (ModDeclenchement modDeclenchement : CollectionCollectible.getModDeclenchement()) {
-            Main.addTextLoad(" - " + modDeclenchement.getNom());
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modDeclenchementCard.fxml"));
-            Pane cardPane = loader.load();
-            ControllerModDeclenchementCard controller = loader.getController();
-            controller.setModDeclenchement(modDeclenchement);
-
-            hbox.getChildren().add(cardPane);
-    		if(hbox.getChildren().size() == 8) {
-    			hboxs.add(hbox);
-    			hbox = createHBox(25, 1305, 220);
-    		}
-        }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
-        }
-
-        return hboxs;
-    }
-
-    public void addNewModDeclenchementCard(ModDeclenchement ModDeclenchement) throws IOException {
-        HBox hbox;
-        boolean toAdd;
-        if(hbox_modDeclenchement.get(hbox_modDeclenchement.size() - 1).getChildren().size() != 8) {
-            hbox = hbox_modDeclenchement.get(hbox_modDeclenchement.size() - 1);
-            toAdd = false;
-        }
-        else {
-            hbox = createHBox(25, 1305, 220);
-            toAdd = true;
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modDeclenchementCard.fxml"));
-        Pane cardPane = loader.load();
-        ControllerModDeclenchementCard controller = loader.getController();
-        controller.setModDeclenchement(ModDeclenchement);
-
-        hbox.getChildren().add(cardPane);
-        if(toAdd) {
-            hbox_modDeclenchement.add(hbox);
-        }
-    }
-
     private List<HBox> createModCard(String type) throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(25, 1305, 260);
-
+        hboxs.add(hbox);
         for(Mod mod : CollectionCollectible.getMod(type)) {
             Main.addTextLoad(" - " + mod.getNom());
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modCard.fxml"));
-            Pane cardPane = loader.load();
-            ControllerModCard controller = loader.getController();
-            controller.setMod(mod);
-
+            Pane cardPane = getCardPaneMod(mod);
             hbox.getChildren().add(cardPane);
             if(hbox.getChildren().size() == 8) {
-                hboxs.add(hbox);
                 hbox = createHBox(25, 1305, 260);
+                hboxs.add(hbox);
             }
         }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
-        }
-
         return hboxs;
     }
 
     public void addNewModCard(String type, Mod mod) throws IOException {
-        HBox hbox;
-        boolean toAdd;
-
-        HBox lastHbox = liste_hbox_mod.get(type).get(liste_hbox_mod.get(type).size() - 1);
-        if(lastHbox.getChildren().size() < 8) {
-            hbox = lastHbox;
-            toAdd = false;
-        }
-        else {
+        HBox hbox = liste_hbox_mod.get(type).get(liste_hbox_mod.get(type).size() - 1);
+        if(hbox.getChildren().size() == 8) {
             hbox = createHBox(25, 1305, 260);
-            toAdd = true;
+            liste_hbox_mod.get(type).add(hbox);
         }
+        Pane cardPane = getCardPaneMod(mod);
+        hbox.getChildren().add(cardPane);
+    }
 
+    private Pane getCardPaneMod(Mod mod) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/collectible/modCard.fxml"));
         Pane cardPane = loader.load();
         ControllerModCard controller = loader.getController();
         controller.setMod(mod);
-
-        hbox.getChildren().add(cardPane);
-        if(toAdd) {
-            liste_hbox_mod.get(type).add(hbox);
-        }
+        return cardPane;
     }
-
-    /* ---- GETTERS ----- */
-    public List<HBox> getHBoxReacteur() {
-        return hbox_reacteur;
-    }
-    public List<HBox> getHBoxComposantExterne() {
-        return hbox_composantExterne;
-    }
-    public List<HBox> getHBoxModArcheo() {
-        return hbox_modArcheo;
-    }
-    public List<HBox> getHBoxModDeclenchement() {
-        return hbox_modDeclenchement;
-    }
-    public List<HBox> getHBoxMod(String type) {
-        return liste_hbox_mod.get(type);
-    }
-      
+          
 }

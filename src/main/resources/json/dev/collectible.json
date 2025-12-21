@@ -1,7 +1,7 @@
 {
   "reacteurs" : [ {
     "id_reacteur" : 1,
-    "nom" : "Eléctrique Dimmension",
+    "nom" : "Eléctrique Dimension",
     "img" : "https://descendant.gg/nexon/images/static/1f5ee44899eef3d673c7cac235d900c3"
   }, {
     "id_reacteur" : 2,
@@ -17,7 +17,7 @@
     "img" : "https://descendant.gg/nexon/images/static/2240918b9062811dfab6918bd2a4173c"
   }, {
     "id_reacteur" : 5,
-    "nom" : "Feu Dimmension",
+    "nom" : "Feu Dimension",
     "img" : "https://descendant.gg/nexon/images/static/56894295e8e96cf90d8bcf4f0b11f422"
   }, {
     "id_reacteur" : 6,
@@ -49,7 +49,7 @@
     "img" : "https://descendant.gg/nexon/images/static/49433b3817b6022223ff09189ad6bce6"
   }, {
     "id_reacteur" : 13,
-    "nom" : "Neutre Dimmension",
+    "nom" : "Neutre Dimension",
     "img" : "https://descendant.gg/nexon/images/static/b58fcddf43b3af366d24b2b0777b6b5f"
   }, {
     "id_reacteur" : 14,
@@ -65,7 +65,7 @@
     "img" : "https://descendant.gg/nexon/images/static/2d0f3ff0be376d247bf895a4fa64c859"
   }, {
     "id_reacteur" : 17,
-    "nom" : "Poison Dimmension",
+    "nom" : "Poison Dimension",
     "img" : "https://descendant.gg/nexon/images/static/316a5b0892c839a0c87e91faa8807007"
   }, {
     "id_reacteur" : 18,
@@ -246,6 +246,21 @@
     "stat_processeur" : "PV max",
     "val_stat_processeur" : "646"
   }, {
+    "id_composantExterne" : 26,
+    "nom" : "Energie pulsatile",
+    "img_auxiliaire" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_DisChargeAssist_T3_01.png",
+    "stat_auxiliaire" : "DEF",
+    "val_stat_auxiliaire" : "3512",
+    "img_detecteur" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_DisChargeAssist_T3_02.png",
+    "stat_detecteur" : "Bouclier max",
+    "val_stat_detecteur" : "206",
+    "img_memoire" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_DisChargeAssist_T3_03.png",
+    "stat_memoire" : "PV max",
+    "val_stat_memoire" : "646",
+    "img_processeur" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_DisChargeAssist_T3_04.png",
+    "stat_processeur" : "PV max",
+    "val_stat_processeur" : "646"
+  }, {
     "id_composantExterne" : 11,
     "nom" : "Envahisseur",
     "img_auxiliaire" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_DeathStalker_T3_01.png",
@@ -258,6 +273,21 @@
     "stat_memoire" : "PV max",
     "val_stat_memoire" : "484",
     "img_processeur" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_DeathStalker_T3_04.png",
+    "stat_processeur" : "PV max",
+    "val_stat_processeur" : "646"
+  }, {
+    "id_composantExterne" : 25,
+    "nom" : "Eradicateurs des produits dangereux",
+    "img_auxiliaire" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_CrashDemonic_T3_01.png",
+    "stat_auxiliaire" : "PV max",
+    "val_stat_auxiliaire" : "646",
+    "img_detecteur" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_CrashDemonic_T3_02.png",
+    "stat_detecteur" : "Bouclier max",
+    "val_stat_detecteur" : "206",
+    "img_memoire" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_CrashDemonic_T3_03.png",
+    "stat_memoire" : "Bouclier max",
+    "val_stat_memoire" : "206",
+    "img_processeur" : "https://static.arche.gg/images/Icon_Acc/Default/Icon_Item_Acc_CrashDemonic_T3_04.png",
     "stat_processeur" : "PV max",
     "val_stat_processeur" : "646"
   }, {
@@ -3717,6 +3747,51 @@
     "type" : "Mod Descendant",
     "img" : "https://descendant.gg/nexon/images/static/f590a631a0e6ab4d0729116a0655c8e0?is_overlay=true&enchant_level=10:10",
     "mot_cle" : "Nell"
+  }, {
+    "id_mod" : 742,
+    "nom" : "Artiste de champ\nde bataille",
+    "cout_max" : "5",
+    "niveaux_max" : "10",
+    "polarite" : "Almadin",
+    "type" : "Mod Descendant",
+    "img" : "",
+    "mot_cle" : "Luna"
+  }, {
+    "id_mod" : 743,
+    "nom" : "Concert du champ\nde bataille",
+    "cout_max" : "5",
+    "niveaux_max" : "10",
+    "polarite" : "Rutile",
+    "type" : "Mod Descendant",
+    "img" : "",
+    "mot_cle" : "Luna"
+  }, {
+    "id_mod" : 744,
+    "nom" : "Instant critique\noptimisé",
+    "cout_max" : "16",
+    "niveaux_max" : "10",
+    "polarite" : "Xantique",
+    "type" : "Mod Descendant",
+    "img" : "",
+    "mot_cle" : ""
+  }, {
+    "id_mod" : 745,
+    "nom" : "Projection\nd'intimidation",
+    "cout_max" : "16",
+    "niveaux_max" : "10",
+    "polarite" : "Xantique",
+    "type" : "Mod Descendant",
+    "img" : "",
+    "mot_cle" : ""
+  }, {
+    "id_mod" : 746,
+    "nom" : "Sur le fil du rasoir",
+    "cout_max" : "16",
+    "niveaux_max" : "10",
+    "polarite" : "Almadin",
+    "type" : "Mod Descendant",
+    "img" : "",
+    "mot_cle" : "PV"
   }, {
     "id_mod" : 365,
     "nom" : "Defense -----",
@@ -7246,6 +7321,46 @@
     "nom" : "Vulnérabilité aux Engelures",
     "polarite" : "Céruléen",
     "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_SkillPowerUp_OnHitByChill.png"
+  }, {
+    "id_modArcheo" : 28,
+    "nom" : "Catalyseur de chaînes archéonique",
+    "polarite" : "Malachite",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_HitSkill_Conv_SkillATKPlainToDEFPlainDown.png"
+  }, {
+    "id_modArcheo" : 29,
+    "nom" : "Catalyseur de chaînes enflamméess",
+    "polarite" : "Almadin",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_HitSkill_Conv_SkillATKBlazerToDEFBlazerDown.png"
+  }, {
+    "id_modArcheo" : 30,
+    "nom" : "Catalyseur de chaînes gelées",
+    "polarite" : "Céruléen",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_HitSkill_Conv_SkillATKGlacierToDEFGlacierDown.png"
+  }, {
+    "id_modArcheo" : 31,
+    "nom" : "Catalyseur de chaînes toxiques",
+    "polarite" : "Xantique",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_HitSkill_Conv_SkillATKDemonicToDEFDemonicDown.png"
+  }, {
+    "id_modArcheo" : 32,
+    "nom" : "Catalyseur de chaînes électriques",
+    "polarite" : "Rutile",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_HitSkill_Conv_SkillATKElectricityToDEFElectricityDown.png"
+  }, {
+    "id_modArcheo" : 33,
+    "nom" : "Concentration archéonique",
+    "polarite" : "Céruléen",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_TargetDebuff_SkillCriticalATKIncreaseUp.png"
+  }, {
+    "id_modArcheo" : 34,
+    "nom" : "Optimisation archéonique",
+    "polarite" : "Malachite",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_TargetDebuff_SkillCriticalChanceUp.png"
+  }, {
+    "id_modArcheo" : 35,
+    "nom" : "Vague d'amplification de récupération",
+    "polarite" : "Malachite",
+    "img" : "https://static.arche.gg/images/Icon_Jewel/Icon_Jewel_OnbuffOrRecovery_GiveHpRecoveryUp_ShieldRecoveryUp.png"
   } ],
   "modsDeclenchement" : [ {
     "id_modDeclenchement" : 1,
@@ -7301,5 +7416,59 @@
     "nb_stat" : 2,
     "polarite" : "None",
     "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_Meteor_Rune.png"
+  }, {
+    "id_modDeclenchement" : 10,
+    "nom" : "Tempête de\nmunitions",
+    "nb_stat" : 2,
+    "polarite" : "None",
+    "img" : ""
+  }, {
+    "id_modDeclenchement" : 11,
+    "nom" : "Accélération\ntactique",
+    "nb_stat" : 2,
+    "polarite" : "None",
+    "img" : ""
+  }, {
+    "id_modDeclenchement" : 12,
+    "nom" : "Zone embrasée",
+    "nb_stat" : 2,
+    "polarite" : "None",
+    "img" : ""
+  }, {
+    "id_modDeclenchement" : 13,
+    "nom" : "Avant-garde\nd'acier",
+    "nb_stat" : 0,
+    "polarite" : "None",
+    "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_MarchofIron_Rune.png"
+  }, {
+    "id_modDeclenchement" : 14,
+    "nom" : "Effet domino",
+    "nb_stat" : 0,
+    "polarite" : "None",
+    "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_DominoDrive_Rune_A.png"
+  }, {
+    "id_modDeclenchement" : 15,
+    "nom" : "Forteresse de\nravitaillement",
+    "nb_stat" : 0,
+    "polarite" : "None",
+    "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_SupplyFortress_Rune.png"
+  }, {
+    "id_modDeclenchement" : 16,
+    "nom" : "Pas rythmiques",
+    "nb_stat" : 0,
+    "polarite" : "None",
+    "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_RhythmStep_Rune.png"
+  }, {
+    "id_modDeclenchement" : 17,
+    "nom" : "Vitesse relative",
+    "nb_stat" : 0,
+    "polarite" : "None",
+    "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_RelativeSpeed_Rune.png"
+  }, {
+    "id_modDeclenchement" : 18,
+    "nom" : "Vague\nfracassante",
+    "nb_stat" : 0,
+    "polarite" : "None",
+    "img" : "https://static.arche.gg/images/Icon_RuneTrigger/Icon_Trigger_PulseEruption_Rune.png"
   } ]
 }

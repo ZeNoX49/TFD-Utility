@@ -12,7 +12,8 @@ module app {
     opens app.controller.page to javafx.fxml;
 
     exports app;
-    exports app.pojo.progression to com.fasterxml.jackson.databind;
+    exports app.pojo.progression.dev to com.fasterxml.jackson.databind;
+    exports app.pojo.progression.user to com.fasterxml.jackson.databind;
     exports app.pojo.collectible to com.fasterxml.jackson.databind;
     exports app.pojo.prereglage to com.fasterxml.jackson.databind;
 }

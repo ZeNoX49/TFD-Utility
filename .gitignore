@@ -1,4 +1,6 @@
 target/
+resources/json/user/progression.json
+resources/json/user/prereglage.json
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

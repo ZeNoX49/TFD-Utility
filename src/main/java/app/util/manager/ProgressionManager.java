@@ -20,35 +20,45 @@ public class ProgressionManager extends Manager {
         }
         return instance;
     }
+
+    /* -------------------------------------------------- */
     
     private int[] hboxData = new int[] {45, 1305, 235};
     private List<HBox> hbox_descendant, hbox_weapon, hbox_acolyte, hbox_vehicule;
 
-    public void initialize() throws IOException {
-        setCardDescendant();
-        setCardWeapon();
-        setCardAcolyte();
-        setCardVehicule();
+    /* ----- Getters -----  */
+    public List<HBox> getHBoxDescendant() throws IOException {
+        if(hbox_descendant == null || hbox_descendant.isEmpty()) {
+            hbox_descendant = setProgressionCard(new ArrayList<>(CollectionProgression.getDescendant()), "Descendants", "d");
+        }
+        return hbox_descendant;
+    }
+    public List<HBox> getHBoxWeapon() throws IOException {
+        if(hbox_weapon == null || hbox_weapon.isEmpty()) {
+            hbox_weapon = setProgressionCard(new ArrayList<>(CollectionProgression.getArme()), "Armes", "w");
+        }
+        return hbox_weapon;
+    }
+    public List<HBox> getHBoxAcolyte() throws IOException {
+        if(hbox_acolyte == null || hbox_acolyte.isEmpty()) {
+            hbox_acolyte = setProgressionCard(new ArrayList<>(CollectionProgression.getAcolyte()), "Acolytes", "a");
+        }
+        return hbox_acolyte;
+    }
+    public List<HBox> getHBoxVehicule() throws IOException {
+        if(hbox_vehicule == null || hbox_vehicule.isEmpty()) {
+            hbox_vehicule = setProgressionCard(new ArrayList<>(CollectionProgression.getVehicule()), "Vehicules", "v");
+        }
+        return hbox_vehicule;
     }
 
-    public void setCardDescendant() throws IOException {
-        hbox_descendant = setProgressionCard(new ArrayList<>(CollectionProgression.getDescendant()), "Descendants", "d");
-    }
-    public void setCardWeapon() throws IOException {
-        hbox_weapon = setProgressionCard(new ArrayList<>(CollectionProgression.getArme()), "Armes", "w");
-    }
-    public void setCardAcolyte() throws IOException {
-        hbox_acolyte = setProgressionCard(new ArrayList<>(CollectionProgression.getAcolyte()), "Acolytes", "a");
-    }
-    public void setCardVehicule() throws IOException {
-        hbox_vehicule = setProgressionCard(new ArrayList<>(CollectionProgression.getVehicule()), "Vehicules", "v");
-    }
-
+    // Affichage
     private List<HBox> setProgressionCard(List<Progression> progressions, String txtChargement, String type) throws IOException {
         Main.addTextLoad("\n" + txtChargement + " :");
         return createProgressionCard(progressions, type);
     }
 
+    // Création des cartes
     public List<HBox> createProgressionCard(List<Progression> progressions, String type) throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(hboxData[0], hboxData[1], hboxData[2]);
@@ -61,7 +71,7 @@ public class ProgressionManager extends Manager {
             hbox.getChildren().add(cardPane);
     		if(hbox.getChildren().size() == 3) {
     			hboxs.add(hbox);
-    			hbox = createHBox(hboxData[0], hboxData[1], hboxData[2]);
+                hbox = createHBox(hboxData[0], hboxData[1], hboxData[2]);
     		}
         }
         if(!hbox.getChildren().isEmpty()) {
@@ -71,46 +81,25 @@ public class ProgressionManager extends Manager {
         return hboxs;
     }
 
+    // Ajout d'une nouvelle carte
     public void addNewProgressionCard(List<HBox> hbox_list, Progression progression, String type) throws IOException {
-        HBox hbox;
-        boolean toAdd;
-        if(hbox_list.get(hbox_list.size() - 1).getChildren().size() != 3) {
-            hbox = hbox_list.get(hbox_list.size() - 1);
-            toAdd = false;
-        }
-        else {
+        HBox hbox = hbox_list.get(hbox_list.size() - 1);
+        if(hbox.getChildren().size() == 3) {
             hbox = createHBox(hboxData[0], hboxData[1], hboxData[2]);
-            toAdd = true;
+            hbox_list.add(hbox);
         }
 
         Pane cardPane = getCardPane(progression, type);
-
         hbox.getChildren().add(cardPane);
-        if(toAdd) {
-            hbox_list.add(hbox);
-        }
     }
 
-    /* ---- GETTERS ----- */
+    // Obtenir une carte
     private Pane getCardPane(Progression progression, String type) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/progression/progressionCard.fxml"));
         Pane cardPane = loader.load();
         ControllerProgressionCard controller = loader.getController();
         controller.setProgression(progression, type);
         return cardPane;
-    }
-
-    public List<HBox> getHBoxDescendant() {
-        return hbox_descendant;
-    }
-    public List<HBox> getHBoxWeapon() {
-        return hbox_weapon;
-    }
-    public List<HBox> getHBoxAcolyte() {
-        return hbox_acolyte;
-    }
-    public List<HBox> getHBoxVehicule() {
-        return hbox_vehicule;
     }
 
 }

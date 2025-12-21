@@ -39,16 +39,18 @@ import app.pojo.prereglage.ConfigComposantExternePOJO;
 import app.pojo.prereglage.ConfigReacteurPOJO;
 import app.pojo.prereglage.PrereglagePOJO;
 import app.pojo.prereglage.PrereglagesPOJO;
-import app.pojo.progression.AcolytePOJO;
-import app.pojo.progression.ArmePOJO;
-import app.pojo.progression.DescendantPOJO;
-import app.pojo.progression.ProgressionPOJO;
-import app.pojo.progression.VehiculePOJO;
+import app.pojo.progression.user.UserProgressionPOJO;
+import app.pojo.progression.user.UserAcolytePOJO;
+import app.pojo.progression.user.UserArmePOJO;
+import app.pojo.progression.user.UserDescendantPOJO;
+import app.pojo.progression.user.UserVehiculePOJO;
 
 public class JSONSaver {
-    private static final String PATH_PROGRESSION = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\progression.json";
-    private static final String PATH_COLLECTIBLE = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\collectible.json";
-    private static final String PATH_PREREGLAGE = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\prereglage.json";
+    private static final String PATH_PROGRESSION_DEV = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\dev\\progression.json";
+    private static final String PATH_COLLECTIBLE_DEV = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\dev\\collectible.json";
+
+    private static final String PATH_PROGRESSION_USER = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\user\\progression.json";
+    private static final String PATH_PREREGLAGE_USER = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\user\\prereglage.json";
 
     private static ObjectMapper objectMapper;
 
@@ -62,11 +64,11 @@ public class JSONSaver {
     }
 
     private static void saveProgression() {
-        ProgressionPOJO progressionPOJO = new ProgressionPOJO();
+        UserProgressionPOJO progressionPOJO = new UserProgressionPOJO();
 
-        List<DescendantPOJO> descendantList = new ArrayList<>();
+        List<UserDescendantPOJO> descendantList = new ArrayList<>();
         for (Descendant descendant : CollectionProgression.getDescendant()) {
-            DescendantPOJO descendantPOJO = new DescendantPOJO();
+            UserDescendantPOJO descendantPOJO = new UserDescendantPOJO();
             descendantPOJO.id_descendant = descendant.getIdDescendant();
             descendantPOJO.nom = descendant.getName();
             descendantPOJO.img = descendant.getImage();
@@ -84,11 +86,11 @@ public class JSONSaver {
             descendantPOJO.type_mod_archeonique_4 = descendant.getTypeModArcheonique4();
             descendantList.add(descendantPOJO);
         }
-        progressionPOJO.descendants = descendantList.toArray(new DescendantPOJO[0]);
+        progressionPOJO.descendants = descendantList.toArray(UserDescendantPOJO[]::new);
 
-        List<ArmePOJO> armeList = new ArrayList<>();
+        List<UserArmePOJO> armeList = new ArrayList<>();
         for (Arme weapon : CollectionProgression.getArme()) {
-            ArmePOJO weaponPOJO = new ArmePOJO();
+            UserArmePOJO weaponPOJO = new UserArmePOJO();
             weaponPOJO.id_arme = weapon.getIdArme();
             weaponPOJO.nom = weapon.getName();
             weaponPOJO.img = weapon.getImage();
@@ -108,11 +110,11 @@ public class JSONSaver {
             weaponPOJO.amelioration_5 = weapon.getAmelioration5();
             armeList.add(weaponPOJO);
         }
-        progressionPOJO.armes = armeList.toArray(new ArmePOJO[0]);
+        progressionPOJO.armes = armeList.toArray(UserArmePOJO[]::new);
 
-        List<AcolytePOJO> acolyteList = new ArrayList<>();
+        List<UserAcolytePOJO> acolyteList = new ArrayList<>();
         for (Acolyte acolyte : CollectionProgression.getAcolyte()) {
-            AcolytePOJO acolytePOJO = new AcolytePOJO();
+            UserAcolytePOJO acolytePOJO = new UserAcolytePOJO();
             acolytePOJO.id_acolyte = acolyte.getIdAcolyte();
             acolytePOJO.nom = acolyte.getName();
             acolytePOJO.img = acolyte.getImage();
@@ -126,11 +128,11 @@ public class JSONSaver {
             acolytePOJO.isCraft = acolyte.isCraft() ? "y" : "n";
             acolyteList.add(acolytePOJO);
         }
-        progressionPOJO.acolytes = acolyteList.toArray(new AcolytePOJO[0]);
+        progressionPOJO.acolytes = acolyteList.toArray(UserAcolytePOJO[]::new);
 
-        List<VehiculePOJO> vehiculeList = new ArrayList<>();
+        List<UserVehiculePOJO> vehiculeList = new ArrayList<>();
         for (Vehicule vehicule : CollectionProgression.getVehicule()) {
-            VehiculePOJO vehiculePOJO = new VehiculePOJO();
+            UserVehiculePOJO vehiculePOJO = new UserVehiculePOJO();
             vehiculePOJO.id_vehicule = vehicule.getIdVehicule();
             vehiculePOJO.nom = vehicule.getName();
             vehiculePOJO.img = vehicule.getImage();
@@ -144,7 +146,7 @@ public class JSONSaver {
             vehiculePOJO.isCraft = vehicule.isCraft() ? "y" : "n";
             vehiculeList.add(vehiculePOJO);
         }
-        progressionPOJO.vehicules = vehiculeList.toArray(new VehiculePOJO[0]);
+        progressionPOJO.vehicules = vehiculeList.toArray(UserVehiculePOJO[]::new);
 
         try {
             File file = new File(PATH_PROGRESSION);
@@ -166,7 +168,7 @@ public class JSONSaver {
             reacteurPOJO.img = reacteur.getImg();
             reacteurList.add(reacteurPOJO);
         }
-        collectiblePOJO.reacteurs = reacteurList.toArray(new ReacteurPOJO[0]);
+        collectiblePOJO.reacteurs = reacteurList.toArray(ReacteurPOJO[]::new);
 
         List<ComposantExternePOJO> composantExterneList = new ArrayList<>();
         for (ComposantExterne composantExterne : CollectionCollectible.getComposantExterne()) {
@@ -187,7 +189,7 @@ public class JSONSaver {
             composantExternePOJO.val_stat_processeur = composantExterne.getValStatProcesseur();
             composantExterneList.add(composantExternePOJO);
         } 
-        collectiblePOJO.composantExternes = composantExterneList.toArray(new ComposantExternePOJO[0]);
+        collectiblePOJO.composantExternes = composantExterneList.toArray(ComposantExternePOJO[]::new);
 
         List<ModPOJO> modList = new ArrayList<>();
         for (Mod mod : CollectionCollectible.getAllMod()) {
@@ -202,7 +204,7 @@ public class JSONSaver {
             modPOJO.mot_cle = mod.getMotCle();
             modList.add(modPOJO);
         }
-        collectiblePOJO.mods = modList.toArray(new ModPOJO[0]);
+        collectiblePOJO.mods = modList.toArray(ModPOJO[]::new);
 
         List<ModArcheoPOJO> modArcheoList = new ArrayList<>();
         for (ModArcheo modArcheo : CollectionCollectible.getModArcheo()) {
@@ -213,7 +215,7 @@ public class JSONSaver {
             modArcheoPOJO.img = modArcheo.getImg();
             modArcheoList.add(modArcheoPOJO);
         }
-        collectiblePOJO.modsArcheo = modArcheoList.toArray(new ModArcheoPOJO[0]);
+        collectiblePOJO.modsArcheo = modArcheoList.toArray(ModArcheoPOJO[]::new);
 
         List<ModDeclenchementPOJO> modDeclenchementList = new ArrayList<>();
         for (ModDeclenchement modDeclenchement : CollectionCollectible.getModDeclenchement()) {
@@ -225,7 +227,7 @@ public class JSONSaver {
             modDeclenchementPOJO.img = modDeclenchement.getImg();
             modDeclenchementList.add(modDeclenchementPOJO);
         }
-        collectiblePOJO.modsDeclenchement = modDeclenchementList.toArray(new ModDeclenchementPOJO[0]);
+        collectiblePOJO.modsDeclenchement = modDeclenchementList.toArray(ModDeclenchementPOJO[]::new);
 
         try {
             File file = new File(PATH_COLLECTIBLE);
@@ -423,7 +425,7 @@ public class JSONSaver {
                 buildArcheoPOJO.key = k;
                 buildArcheoList.add(buildArcheoPOJO);
             }
-            prereglagePOJO.build_archeo = buildArcheoList.toArray(new BuildArcheoPOJO[0]);
+            prereglagePOJO.build_archeo = buildArcheoList.toArray(BuildArcheoPOJO[]::new);
             prereglagePOJO.id_mod_archeo1 = null;
             prereglagePOJO.id_mod_archeo2 = null;
 
@@ -431,7 +433,7 @@ public class JSONSaver {
             for(String attribut : prereglage.getAttributSaison()) {
                 attributList.add(attribut);
             }
-            prereglagePOJO.attribut_saison = attributList.toArray(new String[0]);
+            prereglagePOJO.attribut_saison = attributList.toArray(String[]::new);
 
             // Acolyte et Vehicule
             prereglagePOJO.id_acolyte = prereglage.getIdAcolyte();
@@ -488,7 +490,7 @@ public class JSONSaver {
             // Ajout du prereglage dans la liste
             prereglageList.add(prereglagePOJO);
         }
-        prereglagesPOJO.prereglages = prereglageList.toArray(new PrereglagePOJO[0]);
+        prereglagesPOJO.prereglages = prereglageList.toArray(PrereglagePOJO[]::new);
 
         try {
             File file = new File(PATH_PREREGLAGE);

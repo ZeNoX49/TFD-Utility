@@ -1,85 +1,64 @@
 package app.controller.page;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import app.Main;
-import app.util.manager.CollectibleManager;
-import app.util.manager.PrereglageManager;
-import app.util.manager.ProgressionManager;
-import javafx.animation.PauseTransition;
+import app.model.collectible.Mod;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
-import javafx.util.Duration;
 
 public class ControllerHomePage {
 
+    private final static List<String> LIST_PROGRESSION = new ArrayList<>();
+    static {
+        LIST_PROGRESSION.add("Descendants");
+        LIST_PROGRESSION.add("Armes");
+        LIST_PROGRESSION.add("Acolyte");
+        LIST_PROGRESSION.add("Véhicule");
+    }
+
+    private final static List<String> LIST_COLLECTIBLE = new ArrayList<>();
+    static {
+        LIST_COLLECTIBLE.add("Réacteurs");
+        LIST_COLLECTIBLE.add("Composants Externes");        
+        LIST_COLLECTIBLE.add("Mods Archéoniques");
+        LIST_COLLECTIBLE.add("Mods Déclenchements");
+        for (String modType : Mod.TYPE_MOD) {
+            LIST_COLLECTIBLE.add(modType);
+        }
+    }
+
+    @FXML private ComboBox<String> cbProgression, cbCollectible, cbMode;
     @FXML private TextArea areaLoad, areaError;
-    @FXML private Button btn_progression, btn_collectible, btn_prereglage;
-    @FXML private Button btn_loadProgression, btn_loadCollectible, btn_loadPrereglage;
 
     @FXML
-    void loadProgression(ActionEvent event) {
-        addLoad("\nChargement de la progression en cours");
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(_ -> {
-            ProgressionManager baseManager = ProgressionManager.getInstance();
-            try {
-                baseManager.initialize();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            btn_progression.setDisable(false);
-        });
-        pause.play();
-        btn_loadProgression.setDisable(true);
+    private void initialize() {
+        cbMode.getItems().add("Utilisateur");
+        cbMode.getItems().add("Administrateur");
+        cbMode.setValue("Utilisateur");
+
+        cbProgression.getItems().addAll(LIST_PROGRESSION);
+        cbProgression.setValue("Armes");
+
+        cbCollectible.getItems().addAll(LIST_COLLECTIBLE);
+        cbCollectible.setValue("Composants Externes");
     }
 
     @FXML
-    void loadCollectible(ActionEvent event) {
-        addLoad("\nChargement des collectibles en cours");
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(_ -> {
-            CollectibleManager collectibleManager = CollectibleManager.getInstance();
-            try {
-                collectibleManager.initialize();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            btn_collectible.setDisable(false);
-        });
-        pause.play();
-        btn_loadCollectible.setDisable(true);
-    }
-
-    @FXML
-    void loadPrereglage(ActionEvent event) {
-        addLoad("\nChargement des préréglages en cours");
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(_ -> {
-            PrereglageManager prereglageManager = PrereglageManager.getInstance();
-            try {
-                prereglageManager.initialize();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            btn_prereglage.setDisable(false);
-        });
-        pause.play();
-        btn_loadPrereglage.setDisable(true);
-    }
-
-    @FXML
-    void goToProgression(ActionEvent event) {
+    void goToProgression(ActionEvent event) throws IOException {
         ControllerListPage.type = "progression";
-        ControllerListPage.type_actif = "w";
+        ControllerListPage.type_actif = cbProgression.getValue();
         Main.switchScene("listPage.fxml");
     }
 
     @FXML
-    void goToCollectible(ActionEvent event) {
+    void goToCollectible(ActionEvent event) throws IOException {
         ControllerListPage.type = "collectible";
+        ControllerListPage.type_actif = cbCollectible.getValue();
         Main.switchScene("listPage.fxml");
     }
 

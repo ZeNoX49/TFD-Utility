@@ -26,85 +26,55 @@ public class PrereglageManager extends Manager {
         }
         return instance;
     }
+
+    /* -------------------------------------------------- */
     
-    private Map<Pane, Prereglage> prereglagePane;
-    private List<Prereglage> prereglages;
+    private Map<Pane, Prereglage> prereglagePane = new LinkedHashMap<>();
     private List<HBox> hbox_prereglage;
-    private Map<String, Map<ControllerModCardDisplay, Pane>> liste_card_mod;
-    private List<HBox> hbox_rechercheMod;
 
-    public void initialize() throws IOException {
-        prereglagePane = new LinkedHashMap<>();
-        cardPrereglage();
-
-        liste_card_mod = new LinkedHashMap<>();
-        for(String type : Mod.TYPE_MOD) {
-            cardMod(type);
+    // récupérer hbox_prereglage + la créer si elle n'existe pas
+    public List<HBox> getHBoxPrereglage() throws IOException {
+        if(hbox_prereglage == null || hbox_prereglage.isEmpty()) {
+            Main.addTextLoad("\nPrereglages :");
+            hbox_prereglage = makePrereglageCard();
         }
+        return hbox_prereglage;
     }
 
-    /* ------------------------------------------------------------------------------------------------------------------- */
-
-    public void cardPrereglage() throws IOException {
-        prereglages = new ArrayList<>(CollectionPrereglage.getPrereglage());
-        Main.addTextLoad("\nPrereglages :");
-        hbox_prereglage = makePrereglageCard();
-    }
-
+    // Créer les préréglage
     private List<HBox> makePrereglageCard() throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(20, 1305, 267);
+        hboxs.add(hbox);
 
         for (Prereglage prereglage : CollectionPrereglage.getPrereglage()) {
             Main.addTextLoad(" - " + prereglage.getNom());
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/prereglage/prereglageCard.fxml"));
-            Pane cardPane = loader.load();
-            ControllerPrereglageCard controller = loader.getController();
-            controller.setPrereglage(prereglage);
-
-            prereglagePane.put(cardPane, prereglage);
-            cardPane.setUserData(controller);
+            Pane cardPane = getCardPanePrereglage(prereglage);
 
             hbox.getChildren().add(cardPane);
     		if(hbox.getChildren().size() == 2) {
+                hbox = createHBox(20, 1305, 267);
     			hboxs.add(hbox);
-    			hbox = createHBox(20, 1305, 267);
     		}
-        }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
         }
 
         return hboxs;
     }
 
+    // Ajouter un préréglage
     public void addNewPrereglageCard(Prereglage prereglage) throws IOException {
-        HBox hbox;
-        boolean toAdd;
-        if(hbox_prereglage.get(hbox_prereglage.size() - 1).getChildren().size() != 2) {
-            hbox = hbox_prereglage.get(hbox_prereglage.size() - 1);
-            toAdd = false;
-        }
-        else {
+        HBox hbox = hbox_prereglage.get(hbox_prereglage.size() - 1);
+        if(hbox.getChildren().size() == 2) {
             hbox = createHBox(20, 1305, 267);
-            toAdd = true;
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/prereglage/PrereglageCard.fxml"));
-        Pane cardPane = loader.load();
-        ControllerPrereglageCard controller = loader.getController();
-        controller.setPrereglage(prereglage);
-
-        prereglagePane.put(cardPane, prereglage);
-        cardPane.setUserData(controller);
-
-        hbox.getChildren().add(cardPane);
-        if(toAdd) {
             hbox_prereglage.add(hbox);
         }
+
+        Pane cardPane = getCardPanePrereglage(prereglage);
+        hbox.getChildren().add(cardPane);
     }
 
+    // refresh l'ordre des préréglages à chaque fois que l'on revient sur la liste
     public void refreshPrereglageCard() throws IOException {
         for (HBox hbox : hbox_prereglage) {
             for (Node cardPane : hbox.getChildren()) {
@@ -114,11 +84,30 @@ public class PrereglageManager extends Manager {
         }
     }
 
+    // Obtenir une carte préréglage
+    private Pane getCardPanePrereglage(Prereglage prereglage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/prereglage/PrereglageCard.fxml"));
+        Pane cardPane = loader.load();
+        ControllerPrereglageCard controller = loader.getController();
+        controller.setPrereglage(prereglage);
+
+        prereglagePane.put(cardPane, prereglage);
+        cardPane.setUserData(controller);
+
+        return cardPane;
+    }
+
     /* ------------------------------------------------------------------------------------------------------------------- */
 
-    public void cardMod(String type) throws IOException {
-        Main.addTextLoad("\nMod display " + type + " :");
-        makeListModCard(type);
+    private Map<String, Map<ControllerModCardDisplay, Pane>> liste_card_mod = new LinkedHashMap<>();
+
+    // récupérer liste_card_mod + le créer si elle n'existe pas
+    public Map<ControllerModCardDisplay, Pane> getCardMod(String type) throws IOException {
+        if(!liste_card_mod.containsKey(type)) {
+            Main.addTextLoad("\nMod display " + type + " :");
+            makeListModCard(type);
+        }
+        return liste_card_mod.get(type);
     }
 
     private void makeListModCard(String type) throws IOException {
@@ -141,16 +130,14 @@ public class PrereglageManager extends Manager {
     public List<HBox> makeBoxModCard(Map<ControllerModCardDisplay, Pane> cards) throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(16, 1475, 180);
+        hboxs.add(hbox);
 
         for(Pane cardPane : cards.values()) {
             hbox.getChildren().add(cardPane);
             if(hbox.getChildren().size() == 10) {
-                hboxs.add(hbox);
                 hbox = createHBox(16, 1475, 180);
+                hboxs.add(hbox);
             }
-        }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
         }
 
         return hboxs;
@@ -159,31 +146,20 @@ public class PrereglageManager extends Manager {
     public List<HBox> getHBoxRechercheModCard(Map<ControllerModCardDisplay, Pane> cards, String recherche) throws IOException {
         List<HBox> hboxs = new ArrayList<>();
         HBox hbox = createHBox(16, 1475, 180);
+        hboxs.add(hbox);
 
         for(ControllerModCardDisplay ctrl : cards.keySet()) {
             Mod mod = ctrl.getMod();
             if(mod.getNom().contains(recherche) || mod.getMotCle().contains(recherche)) {
                 hbox.getChildren().add(cards.get(ctrl));
                 if(hbox.getChildren().size() == 10) {
-                    hboxs.add(hbox);
                     hbox = createHBox(16, 1475, 180);
+                    hboxs.add(hbox);
                 }
             }
-        }
-        if(!hbox.getChildren().isEmpty()) {
-            hboxs.add(hbox);
         }
 
         return hboxs;
     }
 
-    /* ------------------------------------------------------------------------------------------------------------------- */
-
-    /* ---- GETTERS ----- */
-    public List<HBox> getHBoxPrereglage() {
-        return hbox_prereglage;
-    }
-    public Map<ControllerModCardDisplay, Pane> getCardMod(String type) {
-        return liste_card_mod.get(type);
-    }
 }

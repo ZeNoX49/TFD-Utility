@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="840.0" prefWidth="1540.0" style="-fx-background-color: #505050ff;" stylesheets="@../../css/combobox.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.page.ControllerPrereglageModifyPage">
+<AnchorPane prefHeight="840.0" prefWidth="1540.0" style="-fx-background-color: #505050ff;" stylesheets="@../../css/combobox.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.page.ControllerPrereglagePage">
    <children>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefWidth="1520.0" spacing="25.0">
          <children>

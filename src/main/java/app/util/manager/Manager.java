@@ -2,10 +2,6 @@ package app.util.manager;
 
 import javafx.scene.layout.HBox;
 
-/**
- * Classe abstraite de base pour tous les Managers.
- * Fournit des méthodes utilitaires pour gérer les cartes et les conteneurs.
- */
 public abstract class Manager {
 
     // public List<HBox> getCard(List<Object> objects, String txtChargement, int[] hboxData) throws IOException {

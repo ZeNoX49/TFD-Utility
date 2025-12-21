@@ -7,7 +7,8 @@ import java.util.Map;
 
 import app.Main;
 import app.model.ID;
-import app.pojo.progression.ArmePOJO;
+import app.pojo.progression.dev.DevArmePOJO;
+import app.pojo.progression.user.UserArmePOJO;
 
 public class Arme extends Progression {
 
@@ -25,6 +26,7 @@ public class Arme extends Progression {
         TYPE_ARME.add("Lanceur");
         TYPE_ARME.add("Mitrailleuse");
         TYPE_ARME.add("Fusil à rayons");
+        TYPE_ARME.add("Arme de mêlée puisante");
     }
 
     public static final Map<String, Map<String, String>> AMELIORATION;
@@ -124,8 +126,8 @@ public class Arme extends Progression {
 
     private static int id = -1;
     
-    private int idArme;
-    private String nbCraft;
+    private final int idArme;
+    private int nbCraft;
     private String typeArme;
     private String amelioration1;
     private String amelioration2;
@@ -138,7 +140,7 @@ public class Arme extends Progression {
         setMat_2("Fibre");
         setMat_3("Nano-tube");
         setMat_4("schéma");
-        setNecessaire("5");
+        setNecessaire(5);
     }
 
     public Arme() {
@@ -147,14 +149,14 @@ public class Arme extends Progression {
         setArme();
         setName("");
         setImage("");
-        setConstruit_1("0");
-        setConstruit_2("0");
-        setConstruit_3("0");
-        setConstruit_4("0");
-        setSchema_1("0");
-        setSchema_2("0");
-        setSchema_3("0");
-        this.nbCraft = "0";
+        setConstruit_1(0);
+        setConstruit_2(0);
+        setConstruit_3(0);
+        setConstruit_4(0);
+        setSchema_1(0);
+        setSchema_2(0);
+        setSchema_3(0);
+        this.nbCraft = 0;
         setCraft(false);
         this.typeArme = "";
         this.amelioration1 = "";
@@ -164,30 +166,30 @@ public class Arme extends Progression {
         this.amelioration5 = "";
     }
 
-    public Arme(ArmePOJO armePOJO) {
-        id = ID.updateID(id, armePOJO.id_arme);
-        this.idArme = armePOJO.id_arme;
+    public Arme(DevArmePOJO devArmePOJO, UserArmePOJO userArmePOJO) {
+        id = ID.updateID(id, devArmePOJO.id_arme);
+        this.idArme = devArmePOJO.id_arme;
         setArme();
-        setName(armePOJO.nom);
-        setImage(armePOJO.img);
-        setConstruit_1(armePOJO.polymere_owned);
-        setConstruit_2(armePOJO.fibre_owned);
-        setConstruit_3(armePOJO.nanotubes_owned);
-        setConstruit_4(armePOJO.schema);
-        setSchema_1(armePOJO.polymere_schema);
-        setSchema_2(armePOJO.fibre_schema);
-        setSchema_3(armePOJO.nanotubes_schema);
-        this.nbCraft = armePOJO.nbCraft;
-        setCraft(isCraft());
-        this.typeArme = armePOJO.type_arme;
-        this.amelioration1 = armePOJO.amelioration_1;
-        this.amelioration2 = armePOJO.amelioration_2;
-        this.amelioration3 = armePOJO.amelioration_3;
-        this.amelioration4 = armePOJO.amelioration_4;
-        this.amelioration5 = armePOJO.amelioration_5;
+        setName(devArmePOJO.nom);
+        setImage(devArmePOJO.img);
+        setConstruit_1(userArmePOJO.polymere_owned);
+        setConstruit_2(userArmePOJO.fibre_owned);
+        setConstruit_3(userArmePOJO.nanotubes_owned);
+        setConstruit_4(userArmePOJO.schema);
+        setSchema_1(userArmePOJO.polymere_schema);
+        setSchema_2(userArmePOJO.fibre_schema);
+        setSchema_3(userArmePOJO.nanotubes_schema);
+        this.nbCraft = userArmePOJO.nbCraft;
+        setCraft(this.isCraft());
+        this.typeArme = devArmePOJO.type_arme;
+        this.amelioration1 = devArmePOJO.amelioration_1;
+        this.amelioration2 = devArmePOJO.amelioration_2;
+        this.amelioration3 = devArmePOJO.amelioration_3;
+        this.amelioration4 = devArmePOJO.amelioration_4;
+        this.amelioration5 = devArmePOJO.amelioration_5;
     }
 
-    public void setNbCraft(String nbCraft)            { this.nbCraft = nbCraft; }
+    public void setNbCraft(int nbCraft)            { this.nbCraft = nbCraft; }
     public void setTypeArme(String type)              { this.typeArme = type; }
     public void setAmelioration1(String amelioration) { this.amelioration1 = amelioration; }
     public void setAmelioration2(String amelioration) { this.amelioration2 = amelioration; }
@@ -195,18 +197,18 @@ public class Arme extends Progression {
     public void setAmelioration4(String amelioration) { this.amelioration4 = amelioration; }
     public void setAmelioration5(String amelioration) { this.amelioration5 = amelioration; }
 
-    public int    getIdArme()        { return idArme; }
-    public String getNbCraft()       { return nbCraft; }
-    public String getTypeArme()      { return typeArme; }
-    public String getAmelioration1() { return amelioration1; }
-    public String getAmelioration2() { return amelioration2; }
-    public String getAmelioration3() { return amelioration3; }
-    public String getAmelioration4() { return amelioration4; }
-    public String getAmelioration5() { return amelioration5; }
+    public int    getIdArme()        { return this.idArme; }
+    public int    getNbCraft()       { return this.nbCraft; }
+    public String getTypeArme()      { return this.typeArme; }
+    public String getAmelioration1() { return this.amelioration1; }
+    public String getAmelioration2() { return this.amelioration2; }
+    public String getAmelioration3() { return this.amelioration3; }
+    public String getAmelioration4() { return this.amelioration4; }
+    public String getAmelioration5() { return this.amelioration5; }
 
     @Override
     public boolean isCraft() {
-        return nbCraft.equals(getNecessaire());
+        return this.nbCraft == this.getNecessaire();
     }
 
 }

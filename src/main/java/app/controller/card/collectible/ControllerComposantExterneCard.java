@@ -13,10 +13,10 @@ public class ControllerComposantExterneCard {
     private ComposantExterne externalComponent;
     public static ImageManager imageManager = ImageManager.getInstance();
 
-    private static ObservableList<String> attribut =        FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.keySet());
-    private static ObservableList<String> pv_max =          FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.get("PV max"));
-    private static ObservableList<String> def =             FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.get("DEF"));
-    private static ObservableList<String> bouclier_max =    FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.get("Bouclier max"));
+    private static ObservableList<String> attribut =     FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.keySet());
+    private static ObservableList<String> pv_max =       FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.get("PV max"));
+    private static ObservableList<String> def =          FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.get("DEF"));
+    private static ObservableList<String> bouclier_max = FXCollections.observableArrayList(ComposantExterne.ATTRIBUT.get("Bouclier max"));
 
     @FXML private TextField name;
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import app.Collection.CollectionCollectible;
 import app.Collection.CollectionProgression;
 import app.Main;
-import app.controller.page.ControllerPrereglageModifyPage;
+import app.controller.page.ControllerPrereglagePage;
 import app.model.prereglage.Prereglage;
 import app.util.manager.ImageManager;
 import javafx.event.ActionEvent;
@@ -64,8 +64,8 @@ public class ControllerPrereglageCard {
 
     @FXML
     void modifyPrereglage(ActionEvent event) throws IOException {
-        Main.switchScene("prereglageModifyPage.fxml");
-        ControllerPrereglageModifyPage controller = (ControllerPrereglageModifyPage) Main.getCurrentController();
+        Main.switchScene("prereglagePage.fxml");
+        ControllerPrereglagePage controller = (ControllerPrereglagePage) Main.getCurrentController();
         controller.setPrereglage(prereglage);
     }
 
