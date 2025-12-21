@@ -1,0 +1,255 @@
+{
+  "prereglages" : [ {
+    "auteur" : "ZeNoX",
+    "nom" : "Void Erosion - Nell - Chasseur",
+    "date" : "18/08/2025",
+    "mot_cle" : "Érosion du Néant",
+    "id_descendant" : 29,
+    "build_descendant" : {
+      "type" : "descendant",
+      "id_mod_1" : 114,
+      "polarite_mod_1" : "Malachite",
+      "id_mod_2" : 194,
+      "polarite_mod_2" : "Almadin",
+      "id_mod_3" : 137,
+      "polarite_mod_3" : "Almadin",
+      "id_mod_4" : 151,
+      "polarite_mod_4" : "Malachite",
+      "id_mod_5" : 124,
+      "polarite_mod_5" : "Rutile",
+      "id_mod_6" : 144,
+      "polarite_mod_6" : "Céruléen",
+      "id_mod_7" : 183,
+      "polarite_mod_7" : "Almadin",
+      "id_mod_8" : 136,
+      "polarite_mod_8" : "Almadin",
+      "id_mod_9" : 186,
+      "polarite_mod_9" : "Xantique",
+      "id_mod_10" : 252,
+      "polarite_mod_10" : "Xantique",
+      "build_descendant" : {
+        "id_mod_descendant" : 360,
+        "polarite_mod_descendant" : "None",
+        "id_mod_secondaire" : 275,
+        "polarite_mod_secondaire" : "Malachite",
+        "id_mod_declenchement" : 6
+      },
+      "build_arme" : null
+    },
+    "id_arme1" : 16,
+    "build_arme1" : {
+      "type" : "arme",
+      "id_mod_1" : null,
+      "polarite_mod_1" : "None",
+      "id_mod_2" : null,
+      "polarite_mod_2" : "None",
+      "id_mod_3" : null,
+      "polarite_mod_3" : "None",
+      "id_mod_4" : null,
+      "polarite_mod_4" : "None",
+      "id_mod_5" : null,
+      "polarite_mod_5" : "None",
+      "id_mod_6" : null,
+      "polarite_mod_6" : "None",
+      "id_mod_7" : null,
+      "polarite_mod_7" : "None",
+      "id_mod_8" : null,
+      "polarite_mod_8" : "None",
+      "id_mod_9" : null,
+      "polarite_mod_9" : "None",
+      "id_mod_10" : null,
+      "polarite_mod_10" : "None",
+      "build_descendant" : null,
+      "build_arme" : {
+        "amelio_1" : "Taux d'augmentation du chargement du grappin X",
+        "amelio_2" : "Dégats critique des armes à feu X",
+        "amelio_3" : "Vitesse de sprint X",
+        "amelio_4" : "Vitesse de sprint X",
+        "amelio_5" : "",
+        "attribut_1" : "ATQ des armes à feu",
+        "attribut_2" : "Taux de coup critique des armes à feu",
+        "attribut_3" : "Dégâts critiques des armes à feu",
+        "attribut_4" : "ATQ de feu"
+      }
+    },
+    "id_arme2" : 1,
+    "build_arme2" : {
+      "type" : "arme",
+      "id_mod_1" : null,
+      "polarite_mod_1" : "None",
+      "id_mod_2" : null,
+      "polarite_mod_2" : "None",
+      "id_mod_3" : null,
+      "polarite_mod_3" : "None",
+      "id_mod_4" : null,
+      "polarite_mod_4" : "None",
+      "id_mod_5" : null,
+      "polarite_mod_5" : "None",
+      "id_mod_6" : null,
+      "polarite_mod_6" : "None",
+      "id_mod_7" : null,
+      "polarite_mod_7" : "None",
+      "id_mod_8" : null,
+      "polarite_mod_8" : "None",
+      "id_mod_9" : null,
+      "polarite_mod_9" : "None",
+      "id_mod_10" : null,
+      "polarite_mod_10" : "None",
+      "build_descendant" : null,
+      "build_arme" : {
+        "amelio_1" : "",
+        "amelio_2" : "",
+        "amelio_3" : "",
+        "amelio_4" : "",
+        "amelio_5" : "",
+        "attribut_1" : "",
+        "attribut_2" : "",
+        "attribut_3" : "",
+        "attribut_4" : ""
+      }
+    },
+    "id_arme3" : null,
+    "build_arme3" : {
+      "type" : "arme",
+      "id_mod_1" : null,
+      "polarite_mod_1" : "None",
+      "id_mod_2" : null,
+      "polarite_mod_2" : "None",
+      "id_mod_3" : null,
+      "polarite_mod_3" : "None",
+      "id_mod_4" : null,
+      "polarite_mod_4" : "None",
+      "id_mod_5" : null,
+      "polarite_mod_5" : "None",
+      "id_mod_6" : null,
+      "polarite_mod_6" : "None",
+      "id_mod_7" : null,
+      "polarite_mod_7" : "None",
+      "id_mod_8" : null,
+      "polarite_mod_8" : "None",
+      "id_mod_9" : null,
+      "polarite_mod_9" : "None",
+      "id_mod_10" : null,
+      "polarite_mod_10" : "None",
+      "build_descendant" : null,
+      "build_arme" : {
+        "amelio_1" : "",
+        "amelio_2" : "",
+        "amelio_3" : "",
+        "amelio_4" : "",
+        "amelio_5" : "",
+        "attribut_1" : "",
+        "attribut_2" : "",
+        "attribut_3" : "",
+        "attribut_4" : ""
+      }
+    },
+    "build_archeo" : [ {
+      "key" : "11_10"
+    }, {
+      "key" : "13_10"
+    }, {
+      "key" : "14_10"
+    }, {
+      "key" : "12_10"
+    }, {
+      "key" : "14_9"
+    }, {
+      "key" : "14_8"
+    }, {
+      "key" : "15_8"
+    }, {
+      "key" : "16_8"
+    }, {
+      "key" : "16_9"
+    }, {
+      "key" : "16_10"
+    }, {
+      "key" : "16_11"
+    }, {
+      "key" : "16_12"
+    }, {
+      "key" : "17_12"
+    }, {
+      "key" : "18_11"
+    }, {
+      "key" : "18_10"
+    }, {
+      "key" : "19_10"
+    }, {
+      "key" : "16_7"
+    }, {
+      "key" : "16_6"
+    }, {
+      "key" : "16_5"
+    }, {
+      "key" : "16_4"
+    }, {
+      "key" : "16_3"
+    }, {
+      "key" : "16_2"
+    }, {
+      "key" : "15_2"
+    }, {
+      "key" : "14_2"
+    }, {
+      "key" : "13_2"
+    }, {
+      "key" : "12_2"
+    }, {
+      "key" : "17_4"
+    }, {
+      "key" : "18_4"
+    }, {
+      "key" : "18_3"
+    }, {
+      "key" : "18_2"
+    }, {
+      "key" : "18_1"
+    }, {
+      "key" : "18_12"
+    }, {
+      "key" : "18_20"
+    }, {
+      "key" : "18_0"
+    } ],
+    "id_mod_archeo1" : null,
+    "id_mod_archeo2" : null,
+    "attribut_saison" : [ "3_4", "2_2", "0_0" ],
+    "id_acolyte" : 1,
+    "id_vehicule" : 2,
+    "config_reacteur" : {
+      "id_reacteur" : 16,
+      "attribut1" : "Délai de réutilisation des compétences",
+      "attribut2" : "Boost de puissances des compétences neutres"
+    },
+    "config_auxiliaire" : {
+      "id_composantExterne" : 12,
+      "amelio1" : "PV max",
+      "amelio2" : "DEF",
+      "attribut1" : "PV max",
+      "attribut2" : "Récupération de PM hors combat"
+    },
+    "config_detecteur" : {
+      "id_composantExterne" : 12,
+      "amelio1" : "PV max",
+      "amelio2" : "DEF",
+      "attribut1" : "PM max",
+      "attribut2" : "Récupération de PM en combat"
+    },
+    "config_memoire" : {
+      "id_composantExterne" : 12,
+      "amelio1" : "PV max",
+      "amelio2" : "DEF",
+      "attribut1" : "DEF",
+      "attribut2" : "Modificateur de récupération des PM"
+    },
+    "config_processeur" : {
+      "id_composantExterne" : 12,
+      "amelio1" : "PV max",
+      "amelio2" : "DEF",
+      "attribut1" : "Bouclier max",
+      "attribut2" : "Modificateur du taux d'obtention d'équipement"
+    }
+  } ]
+}

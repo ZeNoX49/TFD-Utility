@@ -1,5 +1,5 @@
 target/
-src/main/resources/json/user/
+src/main/resources/json/user/progression.json
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
