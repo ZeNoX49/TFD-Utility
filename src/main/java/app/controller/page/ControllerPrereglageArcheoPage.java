@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import app.Collection.CollectionCollectible;
-import app.Collection.CollectionProgression;
 import app.Main;
+import app.collection.CollectionCollectible;
+import app.collection.CollectionProgression;
 import app.controller.card.prereglage.ControllerModArcheoCardDisplay;
 import app.model.collectible.Mod;
 import app.model.collectible.ModArcheo;

@@ -8,9 +8,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.Collection.CollectionCollectible;
-import app.Collection.CollectionPrereglage;
-import app.Collection.CollectionProgression;
+import app.collection.CollectionCollectible;
+import app.collection.CollectionPrereglage;
+import app.collection.CollectionProgression;
 import app.model.collectible.ComposantExterne;
 import app.model.collectible.Mod;
 import app.model.collectible.ModArcheo;
@@ -84,7 +84,9 @@ public class JSONLoader {
 
                 userProgressionPOJO = new UserProgressionPOJO();
 
+                userProgressionPOJO.descendants = new UserDescendantPOJO[devProgressionPOJO.descendants.length];
                 for(int i = 0; i < devProgressionPOJO.descendants.length; i++) {
+                    userProgressionPOJO.descendants[i] = new UserDescendantPOJO();
                     DevDescendantPOJO descendant = devProgressionPOJO.descendants[i];
                     userProgressionPOJO.descendants[i].id_descendant = descendant.id_descendant;
                     userProgressionPOJO.descendants[i].cellule_owned = 0;
@@ -97,7 +99,9 @@ public class JSONLoader {
                     userProgressionPOJO.descendants[i].isCraft = false;
                 }
 
+                userProgressionPOJO.armes = new UserArmePOJO[devProgressionPOJO.armes.length];
                 for(int i = 0; i < devProgressionPOJO.armes.length; i++) {
+                    userProgressionPOJO.armes[i] = new UserArmePOJO();
                     DevArmePOJO descendant = devProgressionPOJO.armes[i];
                     userProgressionPOJO.armes[i].id_arme = descendant.id_arme;
                     userProgressionPOJO.armes[i].polymere_owned = 0;
@@ -110,7 +114,9 @@ public class JSONLoader {
                     userProgressionPOJO.armes[i].nbCraft = 0;
                 }
 
+                userProgressionPOJO.acolytes = new UserAcolytePOJO[devProgressionPOJO.acolytes.length];
                 for(int i = 0; i < devProgressionPOJO.acolytes.length; i++) {
+                    userProgressionPOJO.acolytes[i] = new UserAcolytePOJO();
                     DevAcolytePOJO descendant = devProgressionPOJO.acolytes[i];
                     userProgressionPOJO.acolytes[i].id_acolyte = descendant.id_acolyte;
                     userProgressionPOJO.acolytes[i].cellule_owned = 0;
@@ -123,7 +129,9 @@ public class JSONLoader {
                     userProgressionPOJO.acolytes[i].isCraft = false;
                 }
 
+                userProgressionPOJO.vehicules = new UserVehiculePOJO[devProgressionPOJO.vehicules.length];
                 for(int i = 0; i < devProgressionPOJO.vehicules.length; i++) {
+                    userProgressionPOJO.vehicules[i] = new UserVehiculePOJO();
                     DevVehiculePOJO descendant = devProgressionPOJO.vehicules[i];
                     userProgressionPOJO.vehicules[i].id_vehicule = descendant.id_vehicule;
                     userProgressionPOJO.vehicules[i].moteur_owned = 0;

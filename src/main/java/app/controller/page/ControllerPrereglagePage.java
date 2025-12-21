@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import app.Collection.CollectionCollectible;
-import app.Collection.CollectionPrereglage;
-import app.Collection.CollectionProgression;
 import app.Main;
+import app.collection.CollectionCollectible;
+import app.collection.CollectionPrereglage;
+import app.collection.CollectionProgression;
 import app.controller.card.prereglage.ControllerModArcheoCardDisplay;
 import app.controller.card.prereglage.ControllerModCardDisplay;
 import app.controller.card.prereglage.ControllerModDeclenchementCardDisplay;

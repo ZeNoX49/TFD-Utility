@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import app.Collection.CollectionCollectible;
-import app.Collection.CollectionPrereglage;
 import app.Main;
+import app.collection.CollectionCollectible;
+import app.collection.CollectionPrereglage;
 import app.controller.card.prereglage.ControllerModCardDisplay;
 import app.controller.card.prereglage.ControllerPrereglageCard;
 import app.model.collectible.Mod;

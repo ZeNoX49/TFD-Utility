@@ -13,9 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public abstract class ControllerProgressionCard {
-    private static ImageManager imageManager = ImageManager.getInstance();
+    public static ImageManager imageManager = ImageManager.getInstance();
     
-    // Tout les trucs de base
     @FXML public TextField name, imageLink;
     @FXML public ImageView image;
     @FXML public GridPane gridPane;
@@ -24,25 +23,18 @@ public abstract class ControllerProgressionCard {
     @FXML public Label necessaire_1, necessaire_2, necessaire_3, necessaire_4;
     @FXML public Spinner<Integer> construit_1, construit_2, construit_3, construit_4;
     @FXML public Spinner<Integer> schema_1, schema_2, schema_3;
-    public Spinner<Integer>[] allSpinners;
-
-    // Descendants et Armes
     @FXML public HBox hboxSupp;
-
-    // Armes
     @FXML public ComboBox<String> typeArme;
-
-    private Progression progression;
+    
+    public Spinner<Integer>[] allSpinners;
 
     @FXML
     public void initialize() {
-        allSpinners = new Spinner[] {construit_1, construit_2, construit_3, construit_4, schema_1, schema_2, schema_3};
-        setupSpinners();   // Pour ne pas avoir de problème
+        allSpinners = new Spinner[]{construit_1, construit_2, construit_3, construit_4, schema_1, schema_2, schema_3};
+        setupSpinners();
     }
 
     public void setProgression(Progression progression) {
-        this.progression = progression;
-        
         name.setText(progression.getName());
         imageLink.setText(progression.getImage());
         image.setImage(imageManager.getImage(progression.getImage(), 100, 100));
@@ -67,34 +59,40 @@ public abstract class ControllerProgressionCard {
         construit_4.getValueFactory().setValue(progression.getConstruit_4());
     }
 
-    public CheckBox createCheckbox() {
+    protected CheckBox createCheckbox() {
         CheckBox checkBox = new CheckBox();
         checkBox.setStyle("-fx-font-size: 15px;");
         return checkBox;
     }
 
-    public ComboBox createCombobox(int width) {
-        ComboBox cb = new ComboBox<>();
+    protected <T> ComboBox<T> createCombobox(int width) {
+        ComboBox<T> cb = new ComboBox<>();
         cb.setMinSize(width, 25);
         cb.setPrefSize(width, 25);
         cb.setMaxSize(width, 25);
         return cb;
     }
 
-    public abstract void addListeners();
-    
-    public abstract void setupSpinners();
-    
-    public void setColor(String color) {
-        for(Label label : new Label[] {mat_1, mat_2, mat_3, mat_4, necessaire, construit, schema, necessaire_1, necessaire_2, necessaire_3, necessaire_4}) {
-            label.setStyle("-fx-text-fill: " + color + ";");
-        }
-
-        this.name.setStyle("-fx-text-fill: #c8c8c8; -fx-background-color: transparent");
-        this.imageLink.setStyle("-fx-text-fill: #c8c8c8; -fx-background-color: transparent");
+    protected Spinner<Integer> createSpinnerArme() {
+        Spinner<Integer> spinner = new Spinner<>();
+        spinner.setMinHeight(34);
+        spinner.setPrefHeight(34);
+        spinner.setMaxHeight(34);
+        return spinner;
     }
 
-    public void setColorCompleted(Spinner<Integer> spinner, boolean completed) {
+    public abstract void addListeners();
+    public abstract void setupSpinners();
+    
+    protected void setColor(String color) {
+        for(Label label : new Label[]{mat_1, mat_2, mat_3, mat_4, necessaire, construit, schema, necessaire_1, necessaire_2, necessaire_3, necessaire_4}) {
+            label.setStyle("-fx-text-fill: " + color + ";");
+        }
+        name.setStyle("-fx-text-fill: #c8c8c8; -fx-background-color: transparent");
+        imageLink.setStyle("-fx-text-fill: #c8c8c8; -fx-background-color: transparent");
+    }
+
+    protected void setColorCompleted(Spinner<Integer> spinner, boolean completed) {
         String color = completed ? "#24e624" : "#c8c8c8";
         spinner.getEditor().setStyle(
             "-fx-text-fill: " + color + ";" + 
@@ -104,17 +102,16 @@ public abstract class ControllerProgressionCard {
         );
     }
 
-    /* ------------------------- Card ------------------------- */
-    private void showCard(boolean hboxSupp, boolean typeArme) {
-        this.hboxSupp.setVisible(hboxSupp);
-        this.hboxSupp.setDisable(!hboxSupp);
-
-        this.typeArme.setVisible(typeArme);
-        this.typeArme.setDisable(!typeArme);
+    /* Gestion de l'affichage des cartes */
+    private void showCard(boolean showHboxSupp, boolean showTypeArme) {
+        hboxSupp.setVisible(showHboxSupp);
+        hboxSupp.setDisable(!showHboxSupp);
+        typeArme.setVisible(showTypeArme);
+        typeArme.setDisable(!showTypeArme);
     }
 
-    public void showDescendantCard() { showCard(true,  false); }
-    public void showArmeCard()       { showCard(true,  true); }
-    public void showAcolyteCard()    { showCard(false, false); }
-    public void showVehiculeCard()   { showCard(false, false); }
+    protected void showDescendantCard() { showCard(true, false); }
+    protected void showArmeCard() { showCard(true, true); }
+    protected void showAcolyteCard() { showCard(false, false); }
+    protected void showVehiculeCard() { showCard(false, false); }
 }

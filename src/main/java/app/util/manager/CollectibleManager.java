@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import app.Collection.CollectionCollectible;
 import app.Main;
+import app.collection.CollectionCollectible;
 import app.controller.card.collectible.ControllerComposantExterneCard;
 import app.controller.card.collectible.ControllerModArcheoCard;
 import app.controller.card.collectible.ControllerModCard;

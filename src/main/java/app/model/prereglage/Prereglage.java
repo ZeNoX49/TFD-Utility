@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import app.Collection.CollectionProgression;
+import app.collection.CollectionProgression;
 import app.pojo.prereglage.BuildArcheoPOJO;
 import app.pojo.prereglage.PrereglagePOJO;
 

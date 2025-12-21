@@ -2,9 +2,9 @@ package app.controller.card.prereglage;
 
 import java.io.IOException;
 
-import app.Collection.CollectionCollectible;
-import app.Collection.CollectionProgression;
 import app.Main;
+import app.collection.CollectionCollectible;
+import app.collection.CollectionProgression;
 import app.controller.page.ControllerPrereglagePage;
 import app.model.prereglage.Prereglage;
 import app.util.manager.ImageManager;

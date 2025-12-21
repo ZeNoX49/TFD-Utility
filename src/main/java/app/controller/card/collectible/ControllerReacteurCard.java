@@ -2,8 +2,8 @@ package app.controller.card.collectible;
 
 import java.util.HashMap;
 
-import app.Collection.CollectionCollectible;
 import app.Main;
+import app.collection.CollectionCollectible;
 import app.model.collectible.Reacteur;
 import app.util.manager.ImageManager;
 import javafx.fxml.FXML;

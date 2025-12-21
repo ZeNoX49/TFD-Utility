@@ -8,9 +8,9 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import app.Collection.CollectionCollectible;
-import app.Collection.CollectionPrereglage;
-import app.Collection.CollectionProgression;
+import app.collection.CollectionCollectible;
+import app.collection.CollectionPrereglage;
+import app.collection.CollectionProgression;
 import app.model.collectible.ComposantExterne;
 import app.model.collectible.Mod;
 import app.model.collectible.ModArcheo;

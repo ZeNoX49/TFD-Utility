@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.Collection.CollectionProgression;
 import app.Main;
+import app.collection.CollectionProgression;
 import app.controller.card.progression.ControllerProgressionCard;
+import app.controller.card.progression.ControllerProgressionCardAcolyte;
+import app.controller.card.progression.ControllerProgressionCardArme;
+import app.controller.card.progression.ControllerProgressionCardDescendant;
+import app.controller.card.progression.ControllerProgressionCardVehicule;
 import app.model.progression.Progression;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
@@ -96,9 +100,26 @@ public class ProgressionManager extends Manager {
     // Obtenir une carte
     private Pane getCardPane(Progression progression, String type) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/card/progression/progressionCard.fxml"));
+
+        ControllerProgressionCard controller;
+
+        switch (type) {
+            case "v" -> controller = new ControllerProgressionCardVehicule();
+            case "d" -> controller = new ControllerProgressionCardDescendant();
+            case "w" -> controller = new ControllerProgressionCardArme();
+            case "a" -> controller = new ControllerProgressionCardAcolyte();
+            default -> {
+                Main.addTextErreur("le type est incorrect", "ProgessionManager", "getCardPane()");
+                return null;
+            }
+        }
+
+        loader.setController(controller);
+
         Pane cardPane = loader.load();
-        ControllerProgressionCard controller = loader.getController();
-        controller.setProgression(progression, type);
+
+        controller.setProgression(progression);
+
         return cardPane;
     }
 
