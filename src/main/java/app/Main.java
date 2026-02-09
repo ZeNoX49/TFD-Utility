@@ -19,6 +19,8 @@ public class Main extends Application {
 
     private static Object currentController;
 
+    public static boolean devMode = false;
+
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;

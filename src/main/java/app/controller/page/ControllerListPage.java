@@ -48,6 +48,7 @@ public class ControllerListPage {
     /* ------------------------- INITIALISATION ------------------------- */
     @FXML
     public void initialize() throws IOException {
+        button_plus.setDisable(!Main.devMode);
         switch (type) {
             case "progression" -> initProgression();
             case "collectible" -> initCollectible();

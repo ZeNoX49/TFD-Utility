@@ -39,7 +39,10 @@ public class ControllerHomePage {
     private void initialize() {
         cbMode.getItems().add("Utilisateur");
         cbMode.getItems().add("Administrateur");
-        cbMode.setValue("Utilisateur");
+        cbMode.setValue(Main.devMode ? "Administrateur" : "Utilisateur");
+        cbMode.valueProperty().addListener((_, _, newMode) -> {
+            Main.devMode = newMode.equals("Administrateur");
+        });
 
         cbProgression.getItems().addAll(LIST_PROGRESSION);
         cbProgression.setValue("Armes");
