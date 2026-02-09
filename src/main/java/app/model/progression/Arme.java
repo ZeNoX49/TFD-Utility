@@ -124,7 +124,7 @@ public class Arme extends Progression {
 
     /* -------------------------------------------------- */
 
-    private static int id = -1;
+    private static int id = 0;
     
     private final int idArme;
     private int nbCraft;
@@ -136,28 +136,28 @@ public class Arme extends Progression {
     private String amelioration5;
 
     private void setArme() {
-        setMat_1("Polymère");
-        setMat_2("Fibre");
-        setMat_3("Nano-tube");
-        setMat_4("schéma");
-        setNecessaire(5);
+        this.setMat_1("Polymère");
+        this.setMat_2("Fibre");
+        this.setMat_3("Nano-tube");
+        this.setMat_4("schéma");
+        this.setNecessaire(5);
     }
 
     public Arme() {
         id++;
         this.idArme = id;
-        setArme();
-        setName("");
-        setImage("");
-        setConstruit_1(0);
-        setConstruit_2(0);
-        setConstruit_3(0);
-        setConstruit_4(0);
-        setSchema_1(0);
-        setSchema_2(0);
-        setSchema_3(0);
+        this.setArme();
+        this.setName("");
+        this.setImage("");
+        this.setConstruit_1(0);
+        this.setConstruit_2(0);
+        this.setConstruit_3(0);
+        this.setConstruit_4(0);
+        this.setSchema_1(0);
+        this.setSchema_2(0);
+        this.setSchema_3(0);
         this.nbCraft = 0;
-        setCraft(false);
+        this.setCraft(false);
         this.typeArme = "";
         this.amelioration1 = "";
         this.amelioration2 = "";
@@ -169,18 +169,18 @@ public class Arme extends Progression {
     public Arme(DevArmePOJO devArmePOJO, UserArmePOJO userArmePOJO) {
         id = ID.updateID(id, devArmePOJO.id_arme);
         this.idArme = devArmePOJO.id_arme;
-        setArme();
-        setName(devArmePOJO.nom);
-        setImage(devArmePOJO.img);
-        setConstruit_1(userArmePOJO.polymere_owned);
-        setConstruit_2(userArmePOJO.fibre_owned);
-        setConstruit_3(userArmePOJO.nanotubes_owned);
-        setConstruit_4(userArmePOJO.schema);
-        setSchema_1(userArmePOJO.polymere_schema);
-        setSchema_2(userArmePOJO.fibre_schema);
-        setSchema_3(userArmePOJO.nanotubes_schema);
+        this.setArme();
+        this.setName(devArmePOJO.nom);
+        this.setImage(devArmePOJO.img);
+        this.setConstruit_1(userArmePOJO.polymere_owned);
+        this.setConstruit_2(userArmePOJO.fibre_owned);
+        this.setConstruit_3(userArmePOJO.nanotubes_owned);
+        this.setConstruit_4(userArmePOJO.schema);
+        this.setSchema_1(userArmePOJO.polymere_schema);
+        this.setSchema_2(userArmePOJO.fibre_schema);
+        this.setSchema_3(userArmePOJO.nanotubes_schema);
         this.nbCraft = userArmePOJO.nbCraft;
-        setCraft(this.isCraft());
+        this.setCraft(this.isCraft());
         this.typeArme = devArmePOJO.type_arme;
         this.amelioration1 = devArmePOJO.amelioration_1;
         this.amelioration2 = devArmePOJO.amelioration_2;

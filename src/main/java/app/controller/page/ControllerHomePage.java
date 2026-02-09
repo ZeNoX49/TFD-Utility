@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.Main;
-import app.model.collectible.Mod;
+import app.controller.page.list.ControllerListPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -21,16 +21,16 @@ public class ControllerHomePage {
         LIST_PROGRESSION.add("Véhicule");
     }
 
-    private final static List<String> LIST_COLLECTIBLE = new ArrayList<>();
-    static {
-        LIST_COLLECTIBLE.add("Réacteurs");
-        LIST_COLLECTIBLE.add("Composants Externes");        
-        LIST_COLLECTIBLE.add("Mods Archéoniques");
-        LIST_COLLECTIBLE.add("Mods Déclenchements");
-        for (String modType : Mod.TYPE_MOD) {
-            LIST_COLLECTIBLE.add(modType);
-        }
-    }
+    // private final static List<String> LIST_COLLECTIBLE = new ArrayList<>();
+    // static {
+    //     LIST_COLLECTIBLE.add("Réacteurs");
+    //     LIST_COLLECTIBLE.add("Composants Externes");        
+    //     LIST_COLLECTIBLE.add("Mods Archéoniques");
+    //     LIST_COLLECTIBLE.add("Mods Déclenchements");
+    //     for (String modType : Mod.TYPE_MOD) {
+    //         LIST_COLLECTIBLE.add(modType);
+    //     }
+    // }
 
     @FXML private ComboBox<String> cbProgression, cbCollectible, cbMode;
     @FXML private TextArea areaLoad, areaError;
@@ -47,8 +47,8 @@ public class ControllerHomePage {
         cbProgression.getItems().addAll(LIST_PROGRESSION);
         cbProgression.setValue("Armes");
 
-        cbCollectible.getItems().addAll(LIST_COLLECTIBLE);
-        cbCollectible.setValue("Composants Externes");
+        // cbCollectible.getItems().addAll(LIST_COLLECTIBLE);
+        // cbCollectible.setValue("Composants Externes");
     }
 
     @FXML
@@ -60,15 +60,15 @@ public class ControllerHomePage {
 
     @FXML
     void goToCollectible(ActionEvent event) throws IOException {
-        ControllerListPage.type = "collectible";
-        ControllerListPage.type_actif = cbCollectible.getValue();
-        Main.switchScene("listPage.fxml");
+        // ControllerListPage.type = "collectible";
+        // ControllerListPage.type_actif = cbCollectible.getValue();
+        // Main.switchScene("listPage.fxml");
     }
 
     @FXML
     void goToPrereglage(ActionEvent event) {
-        ControllerListPage.type = "prereglage";
-        Main.switchScene("listPage.fxml");
+        // ControllerListPage.type = "prereglage";
+        // Main.switchScene("listPage.fxml");
     }
 
     public void addLoad(String text) {
